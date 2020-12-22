@@ -109,6 +109,11 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
         foreach ($blockData as $data) {
             if (is_array($data) && $this->isArrayOfBlocks($data)) {
                 foreach ($data as $childData) {
+                    // Ignore if rich text editor block
+                    if (is_string($childData)) {
+                        continue;
+                    }
+
                     $childBlock = $this->createBlockFromData($childData);
 
                     $this->appendChildBlocks($childBlock, $childData);
