@@ -1,6 +1,6 @@
 {
     "name": "medialounge/magento2-storyblok-integration",
-    "description": "Magento 2 Extension to integrate Storyblok into.",
+    "description": "Magento 2 extension to integrate Storyblok content manager and page builder.",
     "type": "magento2-module",
     "version": "1.0.0",
     "autoload": {
