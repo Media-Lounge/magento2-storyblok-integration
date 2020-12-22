@@ -3,6 +3,12 @@
     "description": "Magento 2 extension to integrate Storyblok content manager and page builder.",
     "type": "magento2-module",
     "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Javier Villanueva",
+            "email": "javier@medialounge.co.uk"
+        }
+    ],
     "autoload": {
         "files": [
             "registration.php"
