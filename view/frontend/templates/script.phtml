@@ -1,0 +1,11 @@
+<?php /** @var MediaLounge\Storyblok\Block\Script $block */ ?>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "MediaLounge_Storyblok/js/config": {
+            "apiKey": "<?= $block->escapeJs($block->getApiKey()) ?>"
+        }
+    }
+}
+</script>

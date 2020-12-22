@@ -1,0 +1,19 @@
+{
+    "name": "medialounge/magento2-storyblok-integration",
+    "description": "Magento 2 Extension to integrate Storyblok into.",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MediaLounge\\Storyblok\\": ""
+        }
+    },
+    "require": {
+        "php": "^7.3.0",
+        "magento/framework": "^102.0|^103.0",
+        "storyblok/php-client": "1.3.*"
+    }
+}

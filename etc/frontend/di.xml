@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\Request\CsrfValidator">
+        <plugin name="ml_storyblok_csrf_validator" type="MediaLounge\Storyblok\Plugin\CsrfValidatorSkip" />
+    </type>
+    <type name="Magento\Framework\View\Element\Context">
+        <arguments>
+            <argument name="cacheState" xsi:type="object">MediaLounge\Storyblok\App\Cache\State</argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageCache\Model\Config">
+        <arguments>
+            <argument name="cacheState" xsi:type="object">MediaLounge\Storyblok\App\Cache\State</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="storyblokRouter" xsi:type="array">
+                    <item name="class" xsi:type="string">MediaLounge\Storyblok\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">80</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
