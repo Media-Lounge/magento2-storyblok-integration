@@ -4,6 +4,12 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
     return function (config) {
         let request = { abort: () => {} };
 
+        function enterEditMode() {
+            if (storyblok.inEditor) {
+                storyblok.enterEditmode();
+            }
+        }
+
         storyblok.init({
             accessToken: config.apiKey
         });
@@ -11,6 +17,10 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
         storyblok.on(['published', 'change'], () => window.location.reload());
 
         storyblok.on(['input'], ({ story }) => {
+            const storyContentWithComments = storyblok.addComments(story.content, story.id);
+
+            story.content = storyContentWithComments;
+
             request.abort();
 
             request = $.get('/storyblok/ajax/index', {
@@ -34,18 +44,20 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
                         const nodeData = curNode.textContent.replace('#storyblok#', '');
                         const jsonData = JSON.parse(nodeData);
 
-                        comments[jsonData.uid] = curNode.nextElementSibling;
+                        comments[jsonData.uid] = {
+                            comment: curNode,
+                            element: curNode.nextElementSibling
+                        };
                     }
                 }
 
-                $(comments[blockId]).replaceWith(response[blockId]);
+                $(comments[blockId].comment).remove();
+                $(comments[blockId].element).replaceWith(response[blockId]);
+
+                enterEditMode();
             });
         });
 
-        storyblok.pingEditor(() => {
-            if (storyblok.inEditor) {
-                storyblok.enterEditmode();
-            }
-        });
+        storyblok.pingEditor(() => enterEditMode());
     };
 });
