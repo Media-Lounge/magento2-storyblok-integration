@@ -54,6 +54,8 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
                 $(comments[blockId].comment).remove();
                 $(comments[blockId].element).replaceWith(response[blockId]);
 
+                $('body').trigger('contentUpdated');
+
                 enterEditMode();
             });
         });
