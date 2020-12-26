@@ -110,7 +110,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
             if (is_array($data) && $this->isArrayOfBlocks($data)) {
                 foreach ($data as $childData) {
                     // Ignore if rich text editor block
-                    if (is_string($childData)) {
+                    if (empty($childData['_uid'])) {
                         continue;
                     }
 
