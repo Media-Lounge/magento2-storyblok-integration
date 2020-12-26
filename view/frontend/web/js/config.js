@@ -1,7 +1,7 @@
 define(['jquery', 'storyblok'], ($, storyblok) => {
     'use strict';
 
-    return (config) => {
+    return ({ apiKey }) => {
         let request = { abort: () => {} };
 
         function enterEditMode() {
@@ -17,7 +17,7 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
         }
 
         storyblok.init({
-            accessToken: config.apiKey
+            accessToken: apiKey
         });
 
         storyblok.on(['published', 'change'], () => window.location.reload());
