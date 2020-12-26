@@ -46,25 +46,31 @@
 
         story.content = storyContentWithComments;
 
-        const request = await fetch('/storyblok/index/ajax', {
-            signal,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                story,
-                _storyblok: story.id
-            })
-        });
-        const response = await request.json();
-        const blockId = Object.keys(response)[0];
-        const comments = parseStoryblokComments();
+        try {
+            const request = await fetch('/storyblok/index/ajax', {
+                signal,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    story,
+                    _storyblok: story.id
+                })
+            });
+            const response = await request.json();
+            const blockId = Object.keys(response)[0];
+            const comments = parseStoryblokComments();
 
-        comments[blockId].comment.remove();
-        comments[blockId].element.outerHTML = response[blockId];
+            comments[blockId].comment.remove();
+            comments[blockId].element.outerHTML = response[blockId];
 
-        enterEditMode();
+            document.body.dispatchEvent(new Event('contentUpdated'));
+
+            enterEditMode();
+        } catch (err) {
+            return;
+        }
     });
 
     storyblok.pingEditor(() => enterEditMode());
