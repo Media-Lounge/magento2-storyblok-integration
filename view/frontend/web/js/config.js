@@ -1,7 +1,7 @@
 define(['jquery', 'storyblok'], ($, storyblok) => {
     'use strict';
 
-    return function (config) {
+    return (config) => {
         let request = { abort: () => {} };
 
         function enterEditMode() {
