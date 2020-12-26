@@ -1,14 +1,14 @@
 <?php
-namespace MediaLounge\Storyblok\Controller\Ajax;
+namespace MediaLounge\Storyblok\Controller\Index;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\Action;
 use MediaLounge\Storyblok\Block\Container;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 
-class Index extends Action implements HttpGetActionInterface
+class Ajax extends Action implements HttpPostActionInterface
 {
     public function __construct(Context $context, JsonFactory $resultJsonFactory)
     {

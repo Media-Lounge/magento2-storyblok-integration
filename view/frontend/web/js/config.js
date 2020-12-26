@@ -10,6 +10,12 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
             }
         }
 
+        function isStoryblokComment(node) {
+            if (node.textContent.includes('#storyblok#')) {
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }
+
         storyblok.init({
             accessToken: config.apiKey
         });
@@ -23,32 +29,33 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
 
             request.abort();
 
-            request = $.get('/storyblok/ajax/index', {
-                story,
-                _storyblok: story.id
+            request = $.post({
+                url: '/storyblok/index/ajax',
+                data: {
+                    story,
+                    _storyblok: story.id
+                },
+                global: false
             });
 
             request.then((response) => {
                 let curNode;
                 const comments = {};
-                const iterator = document.createNodeIterator(
+                const htmlComments = document.createNodeIterator(
                     document.body,
                     NodeFilter.SHOW_COMMENT,
-                    () => NodeFilter.FILTER_ACCEPT,
-                    false
+                    isStoryblokComment
                 );
                 const blockId = Object.keys(response)[0];
 
-                while ((curNode = iterator.nextNode())) {
-                    if (curNode.textContent.includes('#storyblok#')) {
-                        const nodeData = curNode.textContent.replace('#storyblok#', '');
-                        const jsonData = JSON.parse(nodeData);
+                while ((curNode = htmlComments.nextNode())) {
+                    const nodeData = curNode.textContent.replace('#storyblok#', '');
+                    const jsonData = JSON.parse(nodeData);
 
-                        comments[jsonData.uid] = {
-                            comment: curNode,
-                            element: curNode.nextElementSibling
-                        };
-                    }
+                    comments[jsonData.uid] = {
+                        comment: curNode,
+                        element: curNode.nextElementSibling
+                    };
                 }
 
                 $(comments[blockId].comment).remove();
