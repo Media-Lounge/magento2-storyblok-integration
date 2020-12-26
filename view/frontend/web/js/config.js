@@ -1,72 +1,71 @@
-define(['jquery', 'storyblok'], ($, storyblok) => {
-    'use strict';
+(function () {
+    let controller = { abort: () => {} };
 
-    return ({ apiKey }) => {
-        let request = { abort: () => {} };
+    function enterEditMode() {
+        if (storyblok.inEditor) {
+            storyblok.enterEditmode();
+        }
+    }
 
-        function enterEditMode() {
-            if (storyblok.inEditor) {
-                storyblok.enterEditmode();
-            }
+    function isStoryblokComment(node) {
+        if (node.textContent.includes('#storyblok#')) {
+            return NodeFilter.FILTER_ACCEPT;
+        }
+    }
+
+    function parseStoryblokComments() {
+        let curNode;
+        const comments = {};
+        const htmlComments = document.createNodeIterator(
+            document.body,
+            NodeFilter.SHOW_COMMENT,
+            isStoryblokComment
+        );
+
+        while ((curNode = htmlComments.nextNode())) {
+            const nodeData = curNode.textContent.replace('#storyblok#', '');
+            const jsonData = JSON.parse(nodeData);
+
+            comments[jsonData.uid] = {
+                comment: curNode,
+                element: curNode.nextElementSibling
+            };
         }
 
-        function isStoryblokComment(node) {
-            if (node.textContent.includes('#storyblok#')) {
-                return NodeFilter.FILTER_ACCEPT;
-            }
-        }
+        return comments;
+    }
 
-        storyblok.init({
-            accessToken: apiKey
+    storyblok.on(['published', 'change'], () => window.location.reload());
+
+    storyblok.on(['input'], async ({ story }) => {
+        controller.abort();
+
+        controller = new AbortController();
+        const { signal } = controller;
+        const storyContentWithComments = storyblok.addComments(story.content, story.id);
+
+        story.content = storyContentWithComments;
+
+        const request = await fetch('/storyblok/index/ajax', {
+            signal,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                story,
+                _storyblok: story.id
+            })
         });
+        const response = await request.json();
+        const blockId = Object.keys(response)[0];
+        const comments = parseStoryblokComments();
 
-        storyblok.on(['published', 'change'], () => window.location.reload());
+        comments[blockId].comment.remove();
+        comments[blockId].element.outerHTML = response[blockId];
 
-        storyblok.on(['input'], ({ story }) => {
-            const storyContentWithComments = storyblok.addComments(story.content, story.id);
+        enterEditMode();
+    });
 
-            story.content = storyContentWithComments;
-
-            request.abort();
-
-            request = $.post({
-                url: '/storyblok/index/ajax',
-                data: {
-                    story,
-                    _storyblok: story.id
-                },
-                global: false
-            });
-
-            request.then((response) => {
-                let curNode;
-                const comments = {};
-                const htmlComments = document.createNodeIterator(
-                    document.body,
-                    NodeFilter.SHOW_COMMENT,
-                    isStoryblokComment
-                );
-                const blockId = Object.keys(response)[0];
-
-                while ((curNode = htmlComments.nextNode())) {
-                    const nodeData = curNode.textContent.replace('#storyblok#', '');
-                    const jsonData = JSON.parse(nodeData);
-
-                    comments[jsonData.uid] = {
-                        comment: curNode,
-                        element: curNode.nextElementSibling
-                    };
-                }
-
-                $(comments[blockId].comment).remove();
-                $(comments[blockId].element).replaceWith(response[blockId]);
-
-                $('body').trigger('contentUpdated');
-
-                enterEditMode();
-            });
-        });
-
-        storyblok.pingEditor(() => enterEditMode());
-    };
-});
+    storyblok.pingEditor(() => enterEditMode());
+})();

@@ -4,22 +4,35 @@ namespace MediaLounge\Storyblok\Controller\Index;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\Action;
 use MediaLounge\Storyblok\Block\Container;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 
 class Ajax extends Action implements HttpPostActionInterface
 {
-    public function __construct(Context $context, JsonFactory $resultJsonFactory)
+    /**
+     * @var Json
+     */
+    private $json;
+
+    /**
+     * @var JsonFactory
+     */
+    private $resultJsonFactory;
+
+    public function __construct(Context $context, Json $json, JsonFactory $resultJsonFactory)
     {
         parent::__construct($context);
 
+        $this->json = $json;
         $this->resultJsonFactory = $resultJsonFactory;
     }
 
     public function execute(): ResultInterface
     {
-        $story = $this->getRequest()->getParam('story', null);
+        $postContent = $this->json->unserialize($this->getRequest()->getContent());
+        $story = $postContent['story'] ?? null;
 
         $result = $this->resultJsonFactory->create();
 
