@@ -1,0 +1,10 @@
+<?php /** @var MediaLounge\Storyblok\Block\Script $block */ ?>
+
+<script
+    src="https://app.storyblok.com/f/storyblok-latest.js?t=<?= $block->escapeHtmlAttr($block->getApiKey()) ?>"
+    defer
+></script>
+<script
+    src="<?= $block->escapeUrl($block->getViewFileUrl('MediaLounge_Storyblok::js/hyva/config.js')) ?>"
+    defer
+></script>

@@ -1,77 +1,79 @@
-(function () {
-    let controller = { abort: () => {} };
+define(['jquery', 'storyblok'], ($, storyblok) => {
+    'use strict';
 
-    function enterEditMode() {
-        if (storyblok.inEditor) {
-            storyblok.enterEditmode();
-        }
-    }
+    return ({ apiKey }) => {
+        let request = { abort: () => {} };
 
-    function isStoryblokComment(node) {
-        if (node.textContent.includes('#storyblok#')) {
-            return NodeFilter.FILTER_ACCEPT;
-        }
-    }
-
-    function parseStoryblokComments() {
-        let curNode;
-        const comments = {};
-        const htmlComments = document.createNodeIterator(
-            document.body,
-            NodeFilter.SHOW_COMMENT,
-            isStoryblokComment
-        );
-
-        while ((curNode = htmlComments.nextNode())) {
-            const nodeData = curNode.textContent.replace('#storyblok#', '');
-            const jsonData = JSON.parse(nodeData);
-
-            comments[jsonData.uid] = {
-                comment: curNode,
-                element: curNode.nextElementSibling
-            };
+        function enterEditMode() {
+            if (storyblok.inEditor) {
+                storyblok.enterEditmode();
+            }
         }
 
-        return comments;
-    }
+        function isStoryblokComment(node) {
+            if (node.textContent.includes('#storyblok#')) {
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }
 
-    storyblok.on(['published', 'change'], () => window.location.reload());
+        function parseStoryblokComments() {
+            let curNode;
+            const comments = {};
+            const htmlComments = document.createNodeIterator(
+                document.body,
+                NodeFilter.SHOW_COMMENT,
+                isStoryblokComment
+            );
 
-    storyblok.on(['input'], async ({ story }) => {
-        controller.abort();
+            while ((curNode = htmlComments.nextNode())) {
+                const nodeData = curNode.textContent.replace('#storyblok#', '');
+                const jsonData = JSON.parse(nodeData);
 
-        controller = new AbortController();
-        const { signal } = controller;
-        const storyContentWithComments = storyblok.addComments(story.content, story.id);
+                comments[jsonData.uid] = {
+                    comment: curNode,
+                    element: curNode.nextElementSibling
+                };
+            }
 
-        story.content = storyContentWithComments;
+            return comments;
+        }
 
-        try {
-            const request = await fetch('/storyblok/index/ajax', {
-                signal,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+        storyblok.init({
+            accessToken: apiKey
+        });
+
+        storyblok.on(['published', 'change'], () => window.location.reload());
+
+        storyblok.on(['input'], ({ story }) => {
+            const storyContentWithComments = storyblok.addComments(story.content, story.id);
+
+            story.content = storyContentWithComments;
+
+            request.abort();
+
+            request = $.post({
+                url: '/storyblok/index/ajax',
+                contentType: 'application/json',
+                data: JSON.stringify({
                     story,
                     _storyblok: story.id
-                })
+                }),
+                global: false
             });
-            const response = await request.json();
-            const blockId = Object.keys(response)[0];
-            const comments = parseStoryblokComments();
 
-            comments[blockId].comment.remove();
-            comments[blockId].element.outerHTML = response[blockId];
+            request.then((response) => {
+                const blockId = Object.keys(response)[0];
+                const comments = parseStoryblokComments();
 
-            document.body.dispatchEvent(new Event('contentUpdated'));
+                $(comments[blockId].comment).remove();
+                $(comments[blockId].element).replaceWith(response[blockId]);
 
-            enterEditMode();
-        } catch (err) {
-            return;
-        }
-    });
+                $('body').trigger('contentUpdated');
 
-    storyblok.pingEditor(() => enterEditMode());
-})();
+                enterEditMode();
+            });
+        });
+
+        storyblok.pingEditor(() => enterEditMode());
+    };
+});
