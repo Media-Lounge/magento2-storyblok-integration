@@ -40,7 +40,7 @@ class State extends \Magento\Framework\App\Cache\State
         }
 
         if (
-            in_array($cacheType, ['block_html']) &&
+            in_array($cacheType, ['block_html', 'full_page']) &&
             ($this->request->getParam('_storyblok') || !empty($postContent['_storyblok']))
         ) {
             return false;
