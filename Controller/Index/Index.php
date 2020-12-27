@@ -1,6 +1,7 @@
 <?php
 namespace MediaLounge\Storyblok\Controller\Index;
 
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
@@ -25,12 +26,9 @@ class Index extends Action implements HttpGetActionInterface
     {
         $story = $this->getRequest()->getParam('story', null);
 
-        /** @var \Magento\Framework\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->pageFactory->create();
-        $resultPage
-            ->getConfig()
-            ->getTitle()
-            ->set($story['name']);
+        $resultPage = $this->setMetaFields($resultPage, $story);
 
         $resultPage
             ->getLayout()
@@ -38,5 +36,41 @@ class Index extends Action implements HttpGetActionInterface
             ->setStory($story);
 
         return $resultPage;
+    }
+
+    private function setMetaFields(Page $resultPage, array $story)
+    {
+        $metaTitle = '';
+        $metaDescription = '';
+
+        foreach ($story['content'] as $data) {
+            if (is_array($data) && $this->isMetaFieldsBlock($data)) {
+                $metaTitle = $data['title'];
+                $metaDescription = $data['description'];
+            }
+        }
+
+        if ($metaTitle) {
+            $resultPage
+                ->getConfig()
+                ->getTitle()
+                ->set($metaTitle);
+        } else {
+            $resultPage
+                ->getConfig()
+                ->getTitle()
+                ->set($story['name']);
+        }
+
+        if ($metaDescription) {
+            $resultPage->getConfig()->setDescription($metaDescription);
+        }
+
+        return $resultPage;
+    }
+
+    private function isMetaFieldsBlock(array $data)
+    {
+        return !empty($data['plugin']) && $data['plugin'] === 'meta-fields';
     }
 }

@@ -101,6 +101,9 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
                     "MediaLounge_Storyblok::story/{$blockData['component']}.phtml"
                 );
         }
+
+        $this->appendChildBlocks($block, $blockData);
+
         return $block;
     }
 
@@ -116,8 +119,6 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
                     $childBlock = $this->createBlockFromData($childData);
 
-                    $this->appendChildBlocks($childBlock, $childData);
-
                     $parentBlock->append($childBlock);
                 }
             }
@@ -131,8 +132,6 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
         if ($storyData) {
             $blockData = $storyData['content'] ?? [];
             $parentBlock = $this->createBlockFromData($blockData);
-
-            $this->appendChildBlocks($parentBlock, $blockData);
 
             return $parentBlock->toHtml();
         }
