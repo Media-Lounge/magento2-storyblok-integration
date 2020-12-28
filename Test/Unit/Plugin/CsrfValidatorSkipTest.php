@@ -15,6 +15,31 @@ class CsrfValidatorSkipTest extends TestCase
      */
     private $objectManagerHelper;
 
+    /**
+     * @var \stdClass|MockObject
+     */
+    private $closureMock;
+
+    /**
+     * @var ActionInterface|MockObject
+     */
+    private $actionMock;
+
+    /**
+     * @var RequestInterface|MockObject
+     */
+    private $requestMock;
+
+    /**
+     * @var CsrfValidator|MockObject
+     */
+    private $csrfValidatorMock;
+
+    /**
+     * @var CsrfValidatorSkip|MockObject
+     */
+    private $csrfValidatorSkip;
+
     protected function setUp(): void
     {
         $this->closureMock = $this->getMockBuilder(\stdClass::class)
