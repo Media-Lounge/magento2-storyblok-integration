@@ -8,7 +8,7 @@ class Script extends \Magento\Framework\View\Element\Template
         return $this->_scopeConfig->getValue('storyblok/general/api_key');
     }
 
-    protected function _toHtml(): string
+    protected function _toHtml(): ?string
     {
         if ($this->getApiKey() && $this->getRequest()->getParam('_storyblok')) {
             return parent::_toHtml();
