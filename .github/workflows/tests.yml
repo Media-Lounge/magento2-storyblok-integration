@@ -15,7 +15,7 @@ jobs:
               with:
                   coverage: none
                   php-version: '7.3'
-                  extension: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
+                  extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1
             - run: |
                   composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
