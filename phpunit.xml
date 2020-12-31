@@ -19,8 +19,4 @@
             </exclude>
         </whitelist>
     </filter>
-    <logging>
-        <log type="coverage-html" target="./report" lowUpperBound="35" highLowerBound="75" />
-        <log type="coverage-clover" target="./report/coverage.xml" />
-    </logging>
 </phpunit>

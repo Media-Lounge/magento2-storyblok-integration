@@ -105,7 +105,10 @@ class ContainerTest extends TestCase
         $this->contextMock->method('getUrlBuilder')->willReturn($urlBuilderMock);
 
         $this->storybookClientMock = $this->createMock(StoryblokClient::class);
-        $this->storybookClientFactoryMock = $this->createMock(StoryblokClientFactory::class);
+        $this->storybookClientFactoryMock = $this->getMockBuilder(StoryblokClientFactory::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
         $this->storybookClientFactoryMock
             ->expects($this->any())
             ->method('create')

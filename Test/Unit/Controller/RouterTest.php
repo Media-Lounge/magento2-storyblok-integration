@@ -109,6 +109,7 @@ class RouterTest extends TestCase
 
         $this->storybookClientFactoryMock = $this->getMockBuilder(StoryblokClientFactory::class)
             ->disableOriginalConstructor()
+            ->setMethods(['create'])
             ->getMock();
         $this->storybookClientMock = $this->getMockBuilder(StoryblokClient::class)
             ->disableOriginalConstructor()
