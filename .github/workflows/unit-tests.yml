@@ -59,10 +59,9 @@ jobs:
               uses: actions/download-artifact@v2
               with:
                   name: report
-                  path: /tmp/report.xml
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v1
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
-                  file: /tmp/report.xml
+                  file: ./report.xml
                   name: codecov-report
