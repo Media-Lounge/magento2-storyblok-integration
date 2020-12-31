@@ -3,9 +3,9 @@ name: Unit Tests
 on: [push, pull_request]
 
 jobs:
-    php73:
+    defaults:
         runs-on: ubuntu-18.04
-
+    php73:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -22,16 +22,8 @@ jobs:
                   composer install --prefer-dist --no-interaction --no-progress --no-suggest
             - name: Run phpunit
               run: |
-                  ./vendor/bin/phpunit -c ./phpunit.xml --testdox --coverage-clover=/tmp/report.xml
-            - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v1
-              with:
-                  token: ${{ secrets.CODECOV_TOKEN }}
-                  file: /tmp/report.xml
-                  name: codecov-php73
+                  ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
     php74:
-        runs-on: ubuntu-18.04
-
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -48,10 +40,13 @@ jobs:
                   composer install --prefer-dist --no-interaction --no-progress --no-suggest
             - name: Run phpunit
               run: |
-                  ./vendor/bin/phpunit -c ./phpunit.xml --testdox --coverage-clover=/tmp/report.xml
+                  ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
+    codecov:
+        needs: [php73, php74]
+        steps:
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v1
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   file: /tmp/report.xml
-                  name: codecov-php74
+                  name: codecov-report
