@@ -31,3 +31,31 @@ jobs:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   file: /tmp/report.xml
                   name: codecov-php73
+    php74:
+        runs-on: ubuntu-18.04
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP 7.4
+              uses: shivammathur/setup-php@master
+              with:
+                  coverage: pcov
+                  ini-values: pcov.directory=.
+                  php-version: '7.4'
+                  extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
+                  tools: composer:v1, prestissimo
+            - name: Install composer dependencies
+              run: |
+                  composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
+                  composer install --prefer-dist --no-interaction --no-progress --no-suggest
+            - name: Run phpunit
+              run: |
+                  ./vendor/bin/phpunit -c ./phpunit.xml --testdox --coverage-clover=/tmp/report.xml
+            - name: Upload coverage to Codecov
+              uses: codecov/codecov-action@v1
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  file: /tmp/report.xml
+                  name: codecov-php74
