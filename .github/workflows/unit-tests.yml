@@ -22,6 +22,11 @@ jobs:
             - name: Run phpunit
               run: |
                   ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
+            - name: Save code coverage report artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: report
+                  path: /tmp/report.xml
     php74:
         runs-on: ubuntu-18.04
         steps:
@@ -41,10 +46,19 @@ jobs:
             - name: Run phpunit
               run: |
                   ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
+            - name: Save code coverage report artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: report
+                  path: /tmp/report.xml
     codecov:
         runs-on: ubuntu-18.04
         needs: [php73, php74]
         steps:
+            - name: Download code coverage report artifact
+              uses: actions/download-artifact@v2
+              with:
+                  name: report
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v1
               with:
