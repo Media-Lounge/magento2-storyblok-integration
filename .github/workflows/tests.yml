@@ -12,12 +12,19 @@ jobs:
 
             - name: Setup PHP 7.3
               uses: shivammathur/setup-php@master
-              with:
-                  coverage: pcov
-                  ini-values: pcov.directory=.
-                  php-version: '7.3'
-                  extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
-                  tools: composer:v1
+                with:
+                    coverage: pcov
+                    ini-values: pcov.directory=.
+                    php-version: '7.3'
+                    extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
+                    tools: composer:v1
             - run: |
-                  composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
-                  composer install --prefer-dist --no-interaction --no-progress --no-suggest
+                composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
+                composer install --prefer-dist --no-interaction --no-progress --no-suggest
+            - name: Run phpunit
+              uses: theomessin/action-phpcov
+                with:
+                    min_coverage: 95
+                    now_project: 'action-phpcov'
+                    now_token: ${{ secrets.NOW_TOKEN }}
+                    phpunit: './vendor/bin/phpunit -c ./phpunit.xml --testdox'
