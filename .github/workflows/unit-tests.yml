@@ -2,9 +2,10 @@ name: Unit Tests
 
 on: [push, pull_request]
 
+defaults:
+    runs-on: ubuntu-18.04
+
 jobs:
-    defaults:
-        runs-on: ubuntu-18.04
     php73:
         steps:
             - name: Checkout code
