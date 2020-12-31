@@ -1,0 +1,22 @@
+name: Run Unit Tests
+
+on: [push, pull_request]
+
+jobs:
+    php73:
+        runs-on: ubuntu-18.04
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP 7.3
+            - uses: shivammathur/setup-php@master
+                with:
+                    coverage: none
+                    php-version: '7.3'
+                    extension: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
+                    tools: composer:v1
+                - run: |
+                    composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
+                    composer install --prefer-dist --no-interaction --no-progress --no-suggest

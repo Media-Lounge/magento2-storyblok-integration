@@ -1,11 +1,8 @@
 <?php
 namespace MediaLounge\Storyblok\Test\Unit\Block\Container;
 
-use Magento\Framework\Phrase;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use MediaLounge\Storyblok\Block\Container\Element;
-use Magento\Framework\Exception\ValidatorException;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 
 class ElementTest extends TestCase
