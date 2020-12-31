@@ -1,6 +1,6 @@
 {
     "story": {
-        "name": "Test",
+        "name": "Test Story",
         "parent_id": 0,
         "group_id": "123456-123456-123456-123456",
         "alternates": [],
@@ -27,9 +27,9 @@
             "_editable": "<!--#storyblok#{\"name\": \"page\", \"uid\": \"12345-12345-12345-12345\", \"id\": \"12345678\"}-->"
         },
         "published": false,
-        "slug": "test",
+        "slug": "test-story",
         "path": null,
-        "full_slug": "test",
+        "full_slug": "test-story",
         "default_root": "",
         "disble_fe_editor": false,
         "parent": null,

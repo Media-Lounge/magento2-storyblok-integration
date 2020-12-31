@@ -118,7 +118,7 @@ class ScriptTest extends TestCase
         $apiKey = null;
 
         $this->scopeConfigMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getValue')
             ->withConsecutive(
                 [
@@ -143,7 +143,7 @@ class ScriptTest extends TestCase
         $apiKey = 'test-api-key';
 
         $this->scopeConfigMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getValue')
             ->withConsecutive(
                 [
@@ -172,10 +172,10 @@ class ScriptTest extends TestCase
     public function testRendersWithApiKeyInStoryblok()
     {
         $apiKey = 'test-api-key';
-        $storyblokId = '123456';
+        $storyId = '123456';
 
         $this->scopeConfigMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getValue')
             ->withConsecutive(
                 [
@@ -190,7 +190,7 @@ class ScriptTest extends TestCase
             ->expects($this->once())
             ->method('getParam')
             ->with('_storyblok')
-            ->willReturn($storyblokId);
+            ->willReturn($storyId);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
             'context' => $this->contextMock,

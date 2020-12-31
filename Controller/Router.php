@@ -63,12 +63,12 @@ class Router implements RouterInterface
             $data = $this->cache->load($identifier);
 
             if (!$data || $request->getParam('_storyblok')) {
-                $reponse = $this->storyblokClient->getStoryBySlug($identifier);
-                $data = $this->serializer->serialize($reponse->getBody());
+                $response = $this->storyblokClient->getStoryBySlug($identifier);
+                $data = $this->serializer->serialize($response->getBody());
 
                 if (!$request->getParam('_storyblok')) {
                     $this->cache->save($data, $identifier, [
-                        'storyblok_' . $reponse->getBody()['story']['id'],
+                        "storyblok_{$response->getBody()['story']['id']}",
                     ]);
                 }
             }

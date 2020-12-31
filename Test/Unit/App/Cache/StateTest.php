@@ -4,6 +4,7 @@ namespace MediaLounge\Storyblok\Test\Unit\App\Cache;
 use PHPUnit\Framework\TestCase;
 use MediaLounge\Storyblok\App\Cache\State;
 use Magento\Framework\App\DeploymentConfig;
+use PHPUnit\Framework\MockObject\MockObject;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\App\DeploymentConfig\Writer;
 use Magento\Framework\App\Cache\Type as CacheType;
@@ -73,12 +74,12 @@ class StateTest extends TestCase
     public function testCacheIsEnabledOutsideStoryblok()
     {
         $this->requestMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getContent')
             ->willReturn(false);
 
         $this->requestMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getParam')
             ->with('_storyblok')
             ->willReturn(false);
@@ -97,18 +98,18 @@ class StateTest extends TestCase
 
     public function testCacheIsDisabledInStoryblok()
     {
-        $storyblokId = '123456';
+        $storyId = '123456';
 
         $this->requestMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getContent')
             ->willReturn(false);
 
         $this->requestMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getParam')
             ->with('_storyblok')
-            ->willReturn($storyblokId);
+            ->willReturn($storyId);
 
         $this->state = $this->objectManagerHelper->getObject(State::class, [
             'json' => $this->jsonMock,
@@ -128,12 +129,12 @@ class StateTest extends TestCase
         $fixtureStoryArray = require __DIR__ . '../../../_files/story_with_blocks.php';
 
         $this->requestMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('getContent')
             ->willReturn($fixtureStory);
 
         $this->jsonMock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('unserialize')
             ->with($fixtureStory)
             ->willReturn($fixtureStoryArray);

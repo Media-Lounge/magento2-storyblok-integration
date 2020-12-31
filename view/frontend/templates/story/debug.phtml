@@ -2,5 +2,5 @@
 
 <div>
     <?= __('Missing template <strong>%1</strong>', $block->getOriginalTemplate()) ?>
-    <pre><?= var_dump($block->getData()) ?></pre>
+    <pre><?php print_r($block->getData()) ?></pre>
 </div>

@@ -1,7 +1,7 @@
 <?php
 namespace MediaLounge\Storyblok\Controller\Index;
 
-use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\Action;
 use MediaLounge\Storyblok\Block\Container;
 use Magento\Framework\Serialize\Serializer\Json;

@@ -25,6 +25,12 @@ return [
                     '_editable' => '',
                 ],
             ],
+            'meta' => [
+                '_uid' => '11111-2222-3333-4444-555555555',
+                'title' => 'Test Meta Title',
+                'plugin' => 'meta-fields',
+                'description' => 'Test Meta Description',
+            ],
             '_editable' => '',
         ],
         'published' => false,

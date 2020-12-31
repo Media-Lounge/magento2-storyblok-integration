@@ -8,6 +8,8 @@ use Magento\Framework\View\Element\AbstractBlock;
 use MediaLounge\Storyblok\Block\Container\Element;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template\Context;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Storyblok\ClientFactory as StoryblokClientFactory;
 
 class Container extends \Magento\Framework\View\Element\Template implements IdentityInterface
 {
@@ -21,11 +23,19 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
      */
     private $viewFileSystem;
 
-    public function __construct(FileSystem $viewFileSystem, Context $context, array $data = [])
-    {
+    public function __construct(
+        FileSystem $viewFileSystem,
+        StoryblokClientFactory $storyblokClient,
+        ScopeConfigInterface $scopeConfig,
+        Context $context,
+        array $data = []
+    ) {
         parent::__construct($context, $data);
 
         $this->viewFileSystem = $viewFileSystem;
+        $this->storyblokClient = $storyblokClient->create([
+            'apiKey' => $scopeConfig->getValue('storyblok/general/api_key'),
+        ]);
     }
 
     public function getCacheLifetime(): int
@@ -35,8 +45,8 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
     public function getIdentities(): array
     {
-        if ($this->getStory()['id']) {
-            return ['storyblok_' . $this->getStory()['id']];
+        if (!empty($this->getData('story')['id'])) {
+            return ["storyblok_{$this->getData('story')['id']}"];
         }
 
         return [];
@@ -45,7 +55,10 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     public function getCacheKeyInfo(): array
     {
         $info = parent::getCacheKeyInfo();
-        $info[] = 'storyblok_' . $this->getData('story')['id'];
+
+        if (!empty($this->getData('story')['id'])) {
+            $info[] = "storyblok_{$this->getData('story')['id']}";
+        }
 
         return $info;
     }
@@ -54,7 +67,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     {
         if (!$this->getData('story')) {
             try {
-                $storyblokClient = $this->getClient()->getStoryBySlug($this->getSlug());
+                $storyblokClient = $this->storyblokClient->getStoryBySlug($this->getSlug());
                 $data = $storyblokClient->getBody();
 
                 $this->setData('story', $data['story']);
@@ -64,17 +77,6 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
         }
 
         return $this->getData('story');
-    }
-
-    private function getClient(): StoryblokClient
-    {
-        if (!$this->storyblokClient) {
-            $this->storyblokClient = new StoryblokClient(
-                $this->_scopeConfig->getValue('storyblok/general/api_key')
-            );
-        }
-
-        return $this->storyblokClient;
     }
 
     private function isArrayOfBlocks(array $data): bool
@@ -92,14 +94,12 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
             "MediaLounge_Storyblok::story/{$blockData['component']}.phtml"
         );
 
-        if (file_exists($templatePath)) {
+        if ($templatePath) {
             $block->setTemplate("MediaLounge_Storyblok::story/{$blockData['component']}.phtml");
         } else {
-            $block
-                ->setTemplate('MediaLounge_Storyblok::story/debug.phtml')
-                ->setOriginalTemplate(
-                    "MediaLounge_Storyblok::story/{$blockData['component']}.phtml"
-                );
+            $block->setTemplate('MediaLounge_Storyblok::story/debug.phtml')->addData([
+                'original_template' => "MediaLounge_Storyblok::story/{$blockData['component']}.phtml",
+            ]);
         }
 
         $this->appendChildBlocks($block, $blockData);

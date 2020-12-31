@@ -1,19 +1,13 @@
 <?php
 namespace MediaLounge\Storyblok\Block\Container;
 
-use Magento\Framework\Exception\ValidatorException;
-
 class Element extends \Magento\Framework\View\Element\Template
 {
     protected function _toHtml(): string
     {
         $editable = $this->getData('_editable') ?? '';
 
-        try {
-            return $editable . parent::_toHtml();
-        } catch (ValidatorException $e) {
-            return "{$editable} <div>{$e->getMessage()}</div>";
-        }
+        return $editable . parent::_toHtml();
     }
 
     protected function buildAttrFromArray(array $array): string
@@ -21,14 +15,6 @@ class Element extends \Magento\Framework\View\Element\Template
         $attributes = [];
 
         foreach ($array as $attribute => $data) {
-            if ($data === null) {
-                continue;
-            }
-
-            if (is_array($data)) {
-                $data = implode(' ', $data);
-            }
-
             $attributes[] = $attribute . '="' . htmlspecialchars($data) . '"';
         }
 
@@ -37,19 +23,21 @@ class Element extends \Magento\Framework\View\Element\Template
 
     protected function textMarks(array $marks, string $content): string
     {
-        if (!is_array($marks)) {
-            return $content;
-        }
-
         foreach ($marks as $mark) {
             $attr = [];
 
             switch ($mark['type']) {
                 case 'bold':
-                    $content = '<b>' . $content . '</b>';
+                    $content = '<strong>' . $content . '</strong>';
                     break;
                 case 'italic':
                     $content = '<i>' . $content . '</i>';
+                    break;
+                case 'strike':
+                    $content = '<s>' . $content . '</s>';
+                    break;
+                case 'underline':
+                    $content = '<u>' . $content . '</u>';
                     break;
                 case 'link':
                     $attr['href'] = $mark['attrs']['href'];
@@ -67,7 +55,7 @@ class Element extends \Magento\Framework\View\Element\Template
         $content = '';
         $element = false;
         $type = isset($arrContent['type']) ? $arrContent['type'] : false;
-        $c = isset($arrContent['content']) ? $arrContent['content'] : false;
+        $innerContent = isset($arrContent['content']) ? $arrContent['content'] : false;
         $attr = [];
         $selfClose = false;
 
@@ -118,10 +106,6 @@ class Element extends \Magento\Framework\View\Element\Template
                 $selfClose = true;
                 break;
 
-            case 'link':
-                $element = 'a';
-                break;
-
             case 'image':
                 $element = 'img';
                 $attr['src'] = $arrContent['attrs']['src'];
@@ -138,9 +122,9 @@ class Element extends \Magento\Framework\View\Element\Template
                 $element = 'span';
         }
 
-        if ($c) {
-            foreach ($c as $a) {
-                $content .= $this->renderWysiwyg($a);
+        if ($innerContent) {
+            foreach ($innerContent as $innerContentArray) {
+                $content .= $this->renderWysiwyg($innerContentArray);
             }
         }
 
