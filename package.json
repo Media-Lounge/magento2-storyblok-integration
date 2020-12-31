@@ -1,0 +1,26 @@
+{
+    "name": "magento2-storyblok-integration",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Magento 2 extension to integrate Storyblok visual editor",
+    "scripts": {
+        "format": "prettier --ignore-unknown --write './**/*.{php,js}'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Media-Lounge/magento2-storyblok-integration.git"
+    },
+    "keywords": [
+        "magento2",
+        "storyblok"
+    ],
+    "author": "Javier Villanueva <javier@medialounge.co.uk>",
+    "bugs": {
+        "url": "https://github.com/Media-Lounge/magento2-storyblok-integration/issues"
+    },
+    "homepage": "https://github.com/Media-Lounge/magento2-storyblok-integration#readme",
+    "devDependencies": {
+        "@prettier/plugin-php": "^0.16.1",
+        "prettier": "^2.2.1"
+    }
+}
