@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Unit Tests
 
 on: [push, pull_request]
 
@@ -13,8 +13,6 @@ jobs:
             - name: Setup PHP 7.3
               uses: shivammathur/setup-php@master
               with:
-                  coverage: pcov
-                  ini-values: pcov.directory=.
                   php-version: '7.3'
                   extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1, prestissimo
@@ -41,8 +39,6 @@ jobs:
             - name: Setup PHP 7.4
               uses: shivammathur/setup-php@master
               with:
-                  coverage: pcov
-                  ini-values: pcov.directory=.
                   php-version: '7.4'
                   extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1, prestissimo
