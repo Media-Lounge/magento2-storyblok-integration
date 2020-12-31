@@ -22,7 +22,7 @@ jobs:
                 composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
                 composer install --prefer-dist --no-interaction --no-progress --no-suggest
             - name: Run phpunit
-              uses: theomessin/action-phpcov
+              uses: theomessin/action-phpcov@master
               with:
                 min_coverage: 95
                 now_project: 'action-phpcov'
