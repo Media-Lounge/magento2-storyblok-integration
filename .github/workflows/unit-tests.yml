@@ -2,11 +2,9 @@ name: Unit Tests
 
 on: [push, pull_request]
 
-defaults:
-    runs-on: ubuntu-18.04
-
 jobs:
     php73:
+        runs-on: ubuntu-18.04
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -25,6 +23,7 @@ jobs:
               run: |
                   ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
     php74:
+        runs-on: ubuntu-18.04
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -43,6 +42,7 @@ jobs:
               run: |
                   ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
     codecov:
+        runs-on: ubuntu-18.04
         needs: [php73, php74]
         steps:
             - name: Upload coverage to Codecov
