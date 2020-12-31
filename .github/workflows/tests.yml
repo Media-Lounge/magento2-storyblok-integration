@@ -17,6 +17,8 @@ jobs:
                   php-version: '7.3'
                   extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1
+                  ini-values: pcov.directory=.
+                  coverage: pcov
             - run: |
                   composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
-                      composer install --prefer-dist --no-interaction --no-progress --no-suggest
+                  composer install --prefer-dist --no-interaction --no-progress --no-suggest
