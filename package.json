@@ -1,8 +1,8 @@
 {
     "name": "magento2-storyblok-integration",
-    "version": "1.0.0",
-    "private": true,
     "description": "Magento 2 extension to integrate Storyblok visual editor",
+    "private": true,
+    "version": "1.0.0",
     "scripts": {
         "format": "prettier --ignore-unknown --write './**/*.{php,js}'"
     },
@@ -12,6 +12,8 @@
     },
     "keywords": [
         "magento2",
+        "magento2-module",
+        "magento2-extension",
         "storyblok"
     ],
     "author": "Javier Villanueva <javier@medialounge.co.uk>",

@@ -9,6 +9,12 @@
             "email": "javier@medialounge.co.uk"
         }
     ],
+    "keywords": [
+        "magento2",
+        "magento2-module",
+        "magento2-extension",
+        "storyblok"
+    ],
     "autoload": {
         "files": [
             "registration.php"
