@@ -1,6 +1,9 @@
 name: Code Style
 
-on: [push]
+on:
+    push:
+        branches:
+            - master
 
 jobs:
     prettier:
