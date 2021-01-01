@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/9.1/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
     colors="true"
     columns="max"
 >
+    <coverage>
+        <include>
+            <directory suffix=".php">./*</directory>
+        </include>
+        <exclude>
+            <directory>./Test</directory>
+            <directory>./vendor</directory>
+        </exclude>
+    </coverage>
     <testsuites>
         <testsuite name="unit">
             <directory>./Test/Unit</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./*</directory>
-            <exclude>
-                <directory>./Test</directory>
-                <directory>./vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
 </phpunit>

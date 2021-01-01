@@ -15,7 +15,7 @@ class Element extends \Magento\Framework\View\Element\Template
         $attributes = [];
 
         foreach ($array as $attribute => $data) {
-            $attributes[] = $attribute . '="' . htmlspecialchars($data) . '"';
+            $attributes[] = $attribute . '="' . $this->escapeHtmlAttr($data) . '"';
         }
 
         return $attributes ? ' ' . implode(' ', $attributes) : '';

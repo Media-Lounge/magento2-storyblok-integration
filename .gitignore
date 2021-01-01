@@ -1,3 +1,4 @@
 vendor
-composer.lock
 node_modules
+composer.lock
+.phpunit.result.cache
