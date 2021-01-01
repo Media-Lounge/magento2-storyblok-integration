@@ -22,4 +22,5 @@ jobs:
             - name: Run phpcs
               run: |
                   ./vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard/
-                  ./vendor/bin/phpcs --standard=Magento2 --extensions=php,phtml --error-severity=10 --ignore-annotations ignore_warnings_on_exit=true --ignore="*vendor/*" .
+                  ./vendor/bin/phpcs --config-set ignore_warnings_on_exit 1
+                  ./vendor/bin/phpcs --standard=Magento2 --extensions=php,phtml --error-severity=10 --ignore-annotations --ignore="*vendor/*" .
