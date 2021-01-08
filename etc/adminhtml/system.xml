@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="medialounge" translate="label" sortOrder="0">
-            <label>Medialounge</label>
+            <label>Media Lounge</label>
         </tab>
         <section id="storyblok" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="0">
             <class>separator-top</class>
@@ -17,12 +17,14 @@
                 </field>
                 <field id="api_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>API Key</label>
+                    <validate>required-entry</validate>
                     <depends>
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
                 </field>
                 <field id="webhook_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Webhook Secret</label>
+                    <validate>required-entry</validate>
                     <depends>
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
