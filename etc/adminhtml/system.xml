@@ -24,7 +24,7 @@
                 </field>
                 <field id="webhook_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Webhook Secret</label>
-                    <validate>required-entry</validate>
+                    <validate>required-entry validate-alphanum validate-length minimum-length-20</validate>
                     <depends>
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
