@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
     <policies>
-        <policy id="frame-src">
+        <policy id="frame-ancestors">
             <values>
                 <value id="medialounge_storyblok" type="host">*.storyblok.com</value>
             </values>
@@ -12,6 +12,11 @@
             </values>
         </policy>
         <policy id="style-src">
+            <values>
+                <value id="medialounge_storyblok" type="host">*.storyblok.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
             <values>
                 <value id="medialounge_storyblok" type="host">*.storyblok.com</value>
             </values>
