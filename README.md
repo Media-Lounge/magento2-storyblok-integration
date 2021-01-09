@@ -116,7 +116,7 @@ When using "Richtext" fields this method will ensure that HTML elements are rend
 | $image | Image URL |
 | $param | Transformation parameters for Storyblok Image Service |
 
-Storyblok offers an [Image Service](https://www.storyblok.com/docs/image-service) that allows you to transform image's size, format, quality amongst other things. This method provides a convinient way of interacting with it so we are able to modify images on the fly.
+Storyblok offers an [Image Service](https://www.storyblok.com/docs/image-service) that allows you to transform image's size, format, quality amongst other things. This method provides a convenient way of interacting with it so we are able to modify images on the fly.
 
 
 **Usage:**
@@ -228,7 +228,7 @@ With some field types we can allow content from Magento to be editable in Storyb
 
 ![Product Grid Block](https://user-images.githubusercontent.com/661330/104106270-796d7080-52ac-11eb-9200-b808fe83ba59.png)
 
-> Hint: The same concept can be used to display any kind fo data, eg: customers, orders, social network posts, etc.
+> Hint: The same concept can be used to display any kind of data, eg: customers, orders, social network posts, etc.
 
 However we can use custom fields to improve this type of content, for the example above we could create a new custom field plugin to query the Magento Products API so we can search against it.
 
