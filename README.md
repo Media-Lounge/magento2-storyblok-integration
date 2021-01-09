@@ -234,4 +234,4 @@ However we can use custom fields to improve this type of content, for the exampl
 
 ![Custom Product Grid Block](https://user-images.githubusercontent.com/661330/104106421-b84ff600-52ad-11eb-872a-e02a66c83ca6.gif)
 
-Storyblok gives us almost unlimited freedom over the look and feel of these fields so we can customise them any way we want, with our integration module we hope you're able to build great content-rich experiences in yout Magento 2 stores!
+Storyblok gives us almost unlimited freedom over the look and feel of these fields so we can customise them any way we want, with our integration module we hope you're able to build great content-rich experiences in your Magento 2 stores!
