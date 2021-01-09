@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/Media-Lounge/magento2-storyblok-integration/branch/master/graph/badge.svg?token=5GDZEF7FMQ)](https://codecov.io/gh/Media-Lounge/magento2-storyblok-integration)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Our Magento 2 integration allows developers and digital agencies to create content-rich pages that are easily editable using the Storyblok interface. 
+Our Magento 2 integration allows developers and digital agencies to create content-rich pages that are easily editable using the Storyblok interface.
 
 <!-- TODO: Add Overview Image -->
 
@@ -22,7 +22,7 @@ It can be used as an **alternative to Magento Commerce's Page Builder** as it pr
 
 ## Installation
 
-1. Install via composer `composer require medialounge/magento2-storyblok-integration`
+1. Install via composer `composer require media-lounge/magento2-storyblok-integration`
 2. Run `php bin/magento setup:upgrade`
 
 ## Getting Started
