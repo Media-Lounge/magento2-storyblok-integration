@@ -46,6 +46,7 @@ class ElementTest extends TestCase
     {
         $block = $this->objectManagerHelper->getObject(Element::class, [
             'data' => ['_editable' => '<!-- editable -->'],
+            'storyblokResolver' => $this->storybookResolverFactoryMock,
         ]);
 
         $this->assertEquals('<!-- editable -->', $block->toHtml());
@@ -53,7 +54,9 @@ class ElementTest extends TestCase
 
     public function testTransformImage()
     {
-        $block = $this->objectManagerHelper->getObject(Element::class);
+        $block = $this->objectManagerHelper->getObject(Element::class, [
+            'storyblokResolver' => $this->storybookResolverFactoryMock,
+        ]);
 
         $actual = 'https://a.storyblok.com/f/133456/800x600/21312312a123/image_800x600.jpg';
         $expected =
