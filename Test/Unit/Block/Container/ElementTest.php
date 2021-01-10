@@ -3,12 +3,25 @@ namespace MediaLounge\Storyblok\Test\Unit\Block\Container;
 
 use Magento\Framework\Escaper;
 use PHPUnit\Framework\TestCase;
-use Magento\Framework\View\Element\Template\Context;
+use Storyblok\RichtextRender\Resolver;
+use PHPUnit\Framework\MockObject\MockObject;
+use Storyblok\RichtextRender\ResolverFactory;
 use MediaLounge\Storyblok\Block\Container\Element;
+use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 
 class ElementTest extends TestCase
 {
+    /**
+     * @var Resolver|MockObject
+     */
+    private $storybookResolverMock;
+
+    /**
+     * @var ResolverFactory|MockObject
+     */
+    private $storybookResolverFactoryMock;
+
     /**
      * @var ObjectManagerHelper
      */
@@ -16,6 +29,16 @@ class ElementTest extends TestCase
 
     protected function setUp(): void
     {
+        $this->storybookResolverMock = $this->createMock(Resolver::class);
+        $this->storybookResolverFactoryMock = $this->getMockBuilder(ResolverFactory::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['create'])
+            ->getMock();
+        $this->storybookResolverFactoryMock
+            ->expects($this->any())
+            ->method('create')
+            ->willReturn($this->storybookResolverMock);
+
         $this->objectManagerHelper = new ObjectManagerHelper($this);
     }
 
@@ -57,12 +80,19 @@ class ElementTest extends TestCase
 
         $block = $this->objectManagerHelper->getObject(Element::class, [
             'context' => $contextMock,
+            'storyblokResolver' => $this->storybookResolverFactoryMock,
         ]);
 
         $fixtureStoryArray = require __DIR__ . '../../../_files/story_with_richtext_field.php';
         $fixtureStoryRendered = file_get_contents(
             __DIR__ . '../../../_files/story_with_richtext_field_rendered.html'
         );
+
+        $this->storybookResolverMock
+            ->expects($this->once())
+            ->method('render')
+            ->with($fixtureStoryArray['story']['content']['body'][0]['content'])
+            ->willReturn($fixtureStoryRendered);
 
         $this->assertEquals(
             $fixtureStoryRendered,
