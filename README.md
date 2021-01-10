@@ -22,7 +22,7 @@ It can be used as an **alternative to Magento Commerce's Page Builder** as it pr
 
 ## Installation
 
-1. Install via composer `composer require media-lounge/magento2-storyblok-integration`
+1. Install via composer `composer require medialounge/magento2-storyblok-integration`
 2. Run `php bin/magento setup:upgrade`
 
 ## Getting Started
