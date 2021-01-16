@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sitemap\Model\ItemProvider\Composite">
+        <arguments>
+            <argument name="itemProviders" xsi:type="array">
+                <item name="storyblokProvider" xsi:type="object">MediaLounge\Storyblok\Model\ItemProvider\Story</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="MediaLounge\Storyblok\Model\ItemProvider\Story">
+        <arguments>
+            <argument name="configReader" xsi:type="object">MediaLounge\Storyblok\Model\ItemProvider\StoryConfigReader</argument>
+        </arguments>
+    </type>
+</config>

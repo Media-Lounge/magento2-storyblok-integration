@@ -20,7 +20,7 @@ class Router implements RouterInterface
     private $actionFactory;
 
     /**
-     * @var Storyblok\Client
+     * @var \Storyblok\Client
      */
     private $storyblokClient;
 
