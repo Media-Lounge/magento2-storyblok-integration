@@ -35,7 +35,7 @@ class State extends \Magento\Framework\App\Cache\State
     {
         $postContent = [];
 
-        if ($this->request->getContent()) {
+        if ($this->isJsonPostRequest($this->request)) {
             $postContent = $this->json->unserialize($this->request->getContent());
         }
 
@@ -47,5 +47,10 @@ class State extends \Magento\Framework\App\Cache\State
         }
 
         return parent::isEnabled($cacheType);
+    }
+
+    private function isJsonPostRequest(RequestInterface $request): bool
+    {
+        return $request->getContent() && $request->getHeader('Content-Type') === 'application/json';
     }
 }

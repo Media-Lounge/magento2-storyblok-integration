@@ -133,6 +133,12 @@ class StateTest extends TestCase
             ->method('getContent')
             ->willReturn($fixtureStory);
 
+        $this->requestMock
+            ->expects($this->atLeastOnce())
+            ->method('getHeader')
+            ->with('Content-Type')
+            ->willReturn('application/json');
+
         $this->jsonMock
             ->expects($this->atLeastOnce())
             ->method('unserialize')
