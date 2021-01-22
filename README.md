@@ -222,6 +222,10 @@ Now the page's title and meta description will be editable from Storyblok.
 
 ![SEO Custom Blocks](https://user-images.githubusercontent.com/661330/104092561-adc93880-527c-11eb-9ac0-a54b4a3d739f.png)
 
+### Sitemap
+
+Storyblok pages will be added to the default Magento sitemap generator. You can change the *Frequency* and *Priority* under **Store → Configuration → Catalog → XML Sitemap → Storyblok Options**.
+
 ### Custom Field Integrations
 
 With some field types we can allow content from Magento to be editable in Storyblok, this can be useful for example when you want to display a list of featured products. The product data is stored in Magento but if we want to specify what products to show we can use a "text" field to allow for a comma-separated list of SKUs to be entered, then in our template we can use a `Helper` or `ViewModels` to parse this value and only show the products that we need.
