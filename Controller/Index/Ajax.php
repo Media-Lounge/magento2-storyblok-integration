@@ -34,10 +34,12 @@ class Ajax extends Action implements HttpPostActionInterface
         $postContent = $this->json->unserialize($this->getRequest()->getContent());
         $story = $postContent['story'] ?? null;
 
+        $layout = $this->_view->getLayout();
         $result = $this->resultJsonFactory->create();
 
-        $block = $this->_view
-            ->getLayout()
+        $layout->getUpdate()->addHandle('storyblok_index_ajax');
+
+        $block = $layout
             ->createBlock(Container::class)
             ->setStory($story)
             ->toHtml();
