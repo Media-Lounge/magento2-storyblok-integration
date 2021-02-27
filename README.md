@@ -35,6 +35,8 @@ It can be used as an **alternative to Magento Commerce's Page Builder** as it pr
 
 If you want to see it in action you can watch our [YouTube playlist](https://www.youtube.com/watch?v=I8_TCyOCKAo&list=PLn3mpLgxMjLSRWmmmf0RRX8wEVgv4dZ0k).
 
+---
+
 ### Do you want to work in projects like these?
 
 At Media Lounge we're always looking for talented Magento front-end and back-end developers, if you're interested feel free to [get in touch](https://twitter.com/jahvi)!
