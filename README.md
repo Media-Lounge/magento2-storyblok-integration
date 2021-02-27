@@ -22,7 +22,6 @@ It can be used as an **alternative to Magento Commerce's Page Builder** as it pr
 
 ## Documentation
 
-* [Home](https://github.com/Media-Lounge/magento2-storyblok-integration/wiki)
 * [Installation](https://github.com/Media-Lounge/magento2-storyblok-integration/wiki/Installation)
 * [Getting Started](https://github.com/Media-Lounge/magento2-storyblok-integration/wiki/Getting-Started)
 * [Configuration](https://github.com/Media-Lounge/magento2-storyblok-integration/wiki/Configuration)
