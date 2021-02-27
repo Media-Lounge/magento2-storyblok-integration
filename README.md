@@ -6,7 +6,7 @@
 
 Our Magento 2 integration allows developers and digital agencies to create content-rich pages that are easily editable using the Storyblok interface.
 
-![Storyblok Integration Overview](https://user-images.githubusercontent.com/661330/105495467-1fa97500-5cb4-11eb-9b43-94bd7e70c20d.jpg)
+![Storyblok Integration Overview](https://user-images.githubusercontent.com/661330/109396266-a0e5ce80-7928-11eb-933a-2ed1e86ad42b.gif)
 
 ## Why Storyblok?
 
