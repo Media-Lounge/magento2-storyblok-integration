@@ -12,6 +12,7 @@ use Magento\Framework\Controller\Result\Json;
 use MediaLounge\Storyblok\Controller\Index\Ajax;
 use Magento\Framework\View\Element\BlockInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\View\Layout\ProcessorInterface;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 
@@ -55,12 +56,23 @@ class AjaxTest extends TestCase
             ->method('toHtml')
             ->willReturn('html');
 
+        $updateMock = $this->getMockForAbstractClass(ProcessorInterface::class);
+        $updateMock
+            ->expects($this->once())
+            ->method('addHandle')
+            ->with('storyblok_index_ajax')
+            ->willReturn($this->returnSelf());
+
         $layoutMock = $this->getMockForAbstractClass(LayoutInterface::class);
         $layoutMock
             ->expects($this->once())
             ->method('createBlock')
             ->with(Container::class)
             ->willReturn($blockMock);
+        $layoutMock
+            ->expects($this->once())
+            ->method('getUpdate')
+            ->willReturn($updateMock);
 
         $viewMock = $this->getMockForAbstractClass(ViewInterface::class);
         $viewMock
