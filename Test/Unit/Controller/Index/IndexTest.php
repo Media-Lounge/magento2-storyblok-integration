@@ -11,6 +11,7 @@ use Magento\Framework\View\LayoutInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Magento\Framework\View\Result\PageFactory;
 use MediaLounge\Storyblok\Controller\Index\Index;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\View\Element\BlockInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 
@@ -59,7 +60,7 @@ class IndexTest extends TestCase
 
         $layoutMock = $this->getMockForAbstractClass(LayoutInterface::class);
         $layoutMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getBlock')
             ->with('storyblok.page')
             ->willReturn($this->blockMock);
@@ -78,23 +79,23 @@ class IndexTest extends TestCase
 
         $this->configMock = $this->createMock(Config::class);
         $this->configMock
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('getTitle')
             ->willReturn($this->titleMock);
 
         $pageMock = $this->createMock(Page::class);
         $pageMock
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('getConfig')
             ->willReturn($this->configMock);
         $pageMock
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('getLayout')
             ->willReturn($layoutMock);
 
         $this->pageFactoryMock = $this->createMock(PageFactory::class);
         $this->pageFactoryMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('create')
             ->willReturn($pageMock);
 
@@ -122,6 +123,24 @@ class IndexTest extends TestCase
             ->method('setStory')
             ->with($fixtureStoryArray['story'])
             ->willReturn($this->returnSelf());
+
+        $controller = $this->objectManagerHelper->getObject(Index::class, [
+            'context' => $this->contextMock,
+            'pageFactory' => $this->pageFactoryMock,
+        ]);
+
+        $controller->execute();
+    }
+
+    public function testMissingStory()
+    {
+        $this->expectException(NotFoundException::class);
+
+        $this->requestMock
+            ->expects($this->atLeastOnce())
+            ->method('getParam')
+            ->with('story', null)
+            ->willReturn(null);
 
         $controller = $this->objectManagerHelper->getObject(Index::class, [
             'context' => $this->contextMock,

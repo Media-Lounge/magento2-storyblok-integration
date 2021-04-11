@@ -6,6 +6,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 
 class Index extends Action implements HttpGetActionInterface
@@ -25,6 +26,10 @@ class Index extends Action implements HttpGetActionInterface
     public function execute(): ResultInterface
     {
         $story = $this->getRequest()->getParam('story', null);
+
+        if (!$story) {
+            throw new NotFoundException(__('Story parameter is missing.'));
+        }
 
         /** @var Page $resultPage */
         $resultPage = $this->pageFactory->create();
