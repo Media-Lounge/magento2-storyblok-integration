@@ -1,12 +1,21 @@
 <?php
+/**
+ * Copyright © Media Lounge. All rights reserved.
+ * See LICENSE for license details.
+ */
+declare(strict_types=1);
+
 namespace MediaLounge\Storyblok\Model\ItemProvider;
 
-use Storyblok\ClientFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
-use Magento\Sitemap\Model\ResourceModel\Cms\PageFactory;
 use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
 use Magento\Sitemap\Model\ItemProvider\ItemProviderInterface;
+
+use Storyblok\ClientFactory;
+
+use MediaLounge\Storyblok\Model\ConfigInterface;
+
 
 class Story implements ItemProviderInterface
 {
@@ -32,17 +41,24 @@ class Story implements ItemProviderInterface
      */
     private $scopeConfig;
 
+    /**
+     * @var ConfigInterface
+     */
+    private $storyblokConfig;
+
     public function __construct(
         ConfigReaderInterface $configReader,
         SitemapItemInterfaceFactory $itemFactory,
         ScopeConfigInterface $scopeConfig,
-        ClientFactory $storyblokClient
+        ClientFactory $storyblokClient,
+        ConfigInterface $storyblokConfig
     ) {
         $this->itemFactory = $itemFactory;
         $this->configReader = $configReader;
         $this->scopeConfig = $scopeConfig;
+        $this->storyblokConfig = $storyblokConfig;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $this->scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $this->storyblokConfig->getApiKey(),
         ]);
     }
 
