@@ -1,4 +1,10 @@
 <?php
+/**
+ * Copyright © Media Lounge. All rights reserved.
+ * See LICENSE for license details.
+ */
+declare(strict_types=1);
+
 namespace MediaLounge\Storyblok\Controller\Cache;
 
 use Magento\Framework\App\Action\Action;
@@ -11,6 +17,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\PageCache\Model\Cache\Type as CacheType;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+
+use MediaLounge\Storyblok\Model\ConfigInterface;
 
 class Clean extends Action implements HttpPostActionInterface
 {
@@ -39,13 +47,19 @@ class Clean extends Action implements HttpPostActionInterface
      */
     private $scopeConfig;
 
+    /**
+     * @var ConfigInteface
+     */
+    private $storyblokConfig;
+
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
         CacheInterface $cacheInterface,
         CacheType $cacheType,
         Json $json,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        ConfigInterface $storyblokConfig
     ) {
         parent::__construct($context);
 
@@ -54,6 +68,7 @@ class Clean extends Action implements HttpPostActionInterface
         $this->cacheType = $cacheType;
         $this->json = $json;
         $this->scopeConfig = $scopeConfig;
+        $this->storyblokConfig = $storyblokConfig;
     }
 
     public function execute(): ResultInterface
@@ -80,7 +95,7 @@ class Clean extends Action implements HttpPostActionInterface
      */
     private function isSignatureValid(RequestInterface $request): bool
     {
-        $webhookSecret = $this->scopeConfig->getValue('storyblok/general/webhook_secret');
+        $webhookSecret = $this->storyblokConfig->getWebhookSecret();
         $signature = hash_hmac('sha1', $request->getContent(), $webhookSecret);
         $webhookSignature = $request
             ->getHeaders()

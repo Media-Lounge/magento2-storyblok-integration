@@ -1,8 +1,12 @@
 <?php
+/**
+ * Copyright © Media Lounge. All rights reserved.
+ * See LICENSE for license details.
+ */
+declare(strict_types=1);
+
 namespace MediaLounge\Storyblok\Controller;
 
-use Storyblok\ApiException;
-use Storyblok\ClientFactory;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\CacheInterface;
@@ -11,6 +15,11 @@ use Magento\Framework\App\RouterInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+
+use Storyblok\ApiException;
+use Storyblok\ClientFactory;
+
+use MediaLounge\Storyblok\Model\ConfigInterface;
 
 class Router implements RouterInterface
 {
@@ -39,17 +48,24 @@ class Router implements RouterInterface
      */
     private $serializer;
 
+    /**
+     * @var ConfigInterface
+     */
+    private $storyblokConfig;
+
     public function __construct(
         ActionFactory $actionFactory,
         ScopeConfigInterface $scopeConfig,
         ClientFactory $storyblokClient,
         CacheInterface $cache,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        ConfigInterface $storyblokConfig
     ) {
         $this->actionFactory = $actionFactory;
         $this->scopeConfig = $scopeConfig;
+        $this->storyblokConfig = $storyblokConfig;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $this->scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $this->storyblokConfig->getApiKey(),
         ]);
         $this->cache = $cache;
         $this->serializer = $serializer;

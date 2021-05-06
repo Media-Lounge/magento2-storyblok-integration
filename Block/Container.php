@@ -1,17 +1,25 @@
 <?php
+/**
+ * Copyright © Media Lounge. All rights reserved.
+ * See LICENSE for license details.
+ */
+declare(strict_types=1);
+
 namespace MediaLounge\Storyblok\Block;
 
-use Storyblok\ApiException;
 use Magento\Framework\View\FileSystem;
-use Storyblok\Client as StoryblokClient;
 use Magento\Framework\View\Element\AbstractBlock;
-use MediaLounge\Storyblok\Block\Container\Element;
 use Magento\Framework\DataObject\IdentityInterface;
-use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\View\Element\Template;
+
+use Storyblok\ApiException;
+use Storyblok\Client as StoryblokClient;
 use Storyblok\ClientFactory as StoryblokClientFactory;
 
-class Container extends \Magento\Framework\View\Element\Template implements IdentityInterface
+use MediaLounge\Storyblok\Block\Container\Element;
+use MediaLounge\Storyblok\Model\ConfigInterface;
+
+class Container extends Template implements IdentityInterface
 {
     /**
      * @var StoryblokClient
@@ -23,18 +31,24 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
      */
     private $viewFileSystem;
 
+    /**
+     * @var ConfigInterface
+     */
+    private $storyblokConfig;
+
     public function __construct(
         FileSystem $viewFileSystem,
         StoryblokClientFactory $storyblokClient,
-        ScopeConfigInterface $scopeConfig,
-        Context $context,
+        Template\Context $context,
+        ConfigInterface $storyblokConfig,
         array $data = []
     ) {
         parent::__construct($context, $data);
 
         $this->viewFileSystem = $viewFileSystem;
+        $this->storyblokConfig = $storyblokConfig;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $this->storyblokConfig->getApiKey(),
         ]);
     }
 
