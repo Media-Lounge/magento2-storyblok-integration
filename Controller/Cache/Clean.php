@@ -62,9 +62,9 @@ class Clean extends Action implements HttpPostActionInterface
         $postContent = $this->json->unserialize($this->getRequest()->getContent());
 
         if ($this->isSignatureValid($this->getRequest()) && isset($postContent['story_id'])) {
-            $tag = "storyblok_{$postContent['story_id']}";
-            $this->cacheInterface->clean([$tag]);
-            $this->cacheType->clean(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, [$tag]);
+            $tags = ['storyblok', "storyblok_{$postContent['story_id']}"];
+            $this->cacheInterface->clean($tags);
+            $this->cacheType->clean(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
 
             $success = true;
         }
