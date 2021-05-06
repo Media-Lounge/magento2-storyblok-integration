@@ -45,13 +45,30 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
     public function getIdentities(): array
     {
-        return ["storyblok_{$this->getStory()['id']}"];
+        $identities = [];
+
+        if (!empty($this->getData('story')['id'])) {
+            $identities[] = "storyblok_{$this->getData('story')['id']}";
+        }
+
+        if (!empty($this->getSlug())) {
+            $identities[] = "storyblok_slug_{$this->getSlug()}";
+        }
+
+        return $identities;
     }
 
     public function getCacheKeyInfo(): array
     {
         $info = parent::getCacheKeyInfo();
-        $info[] = "storyblok_{$this->getStory()['id']}";
+
+        if (!empty($this->getData('story')['id'])) {
+            $info[] = "storyblok_{$this->getData('story')['id']}";
+        }
+
+        if (!empty($this->getSlug())) {
+            $info[] = "storyblok_slug_{$this->getSlug()}";
+        }
 
         return $info;
     }
