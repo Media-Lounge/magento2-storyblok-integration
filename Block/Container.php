@@ -10,6 +10,7 @@ use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Storyblok\ClientFactory as StoryblokClientFactory;
+use Magento\Store\Model\ScopeInterface;
 
 class Container extends \Magento\Framework\View\Element\Template implements IdentityInterface
 {
@@ -34,7 +35,11 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
         $this->viewFileSystem = $viewFileSystem;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $scopeConfig->getValue(
+                'storyblok/general/api_key',
+                ScopeInterface::SCOPE_STORE,
+                $this->_storeManager->getStore()->getId()
+            )
         ]);
     }
 
