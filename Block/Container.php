@@ -3,6 +3,7 @@ namespace MediaLounge\Storyblok\Block;
 
 use Storyblok\ApiException;
 use Magento\Framework\View\FileSystem;
+use Magento\Store\Model\ScopeInterface;
 use Storyblok\Client as StoryblokClient;
 use Magento\Framework\View\Element\AbstractBlock;
 use MediaLounge\Storyblok\Block\Container\Element;
@@ -10,7 +11,6 @@ use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Storyblok\ClientFactory as StoryblokClientFactory;
-use Magento\Store\Model\ScopeInterface;
 
 class Container extends \Magento\Framework\View\Element\Template implements IdentityInterface
 {

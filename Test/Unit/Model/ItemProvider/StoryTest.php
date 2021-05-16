@@ -4,7 +4,9 @@ namespace MediaLounge\Storyblok\Test\Unit\Model\ItemProvider;
 use PHPUnit\Framework\TestCase;
 use Magento\Sitemap\Model\SitemapItem;
 use Storyblok\Client as StoryblokClient;
+use Magento\Store\Api\Data\StoreInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
 use Storyblok\ClientFactory as StoryblokClientFactory;
@@ -28,6 +30,11 @@ class StoryTest extends TestCase
      * @var SitemapItemInterfaceFactory|MockObject
      */
     private $itemFactoryMock;
+
+    /**
+     * @var StoreManagerInterface|MockObject
+     */
+    private $storeManagerMock;
 
     /**
      * @var string
@@ -54,6 +61,11 @@ class StoryTest extends TestCase
             ->method('getValue')
             ->with('storyblok/general/api_key')
             ->willReturn($this->apiKey);
+
+        $storeInterfaceMock = $this->getMockForAbstractClass(StoreInterface::class);
+
+        $this->storeManagerMock = $this->getMockForAbstractClass(StoreManagerInterface::class);
+        $this->storeManagerMock->method('getStore')->willReturn($storeInterfaceMock);
     }
 
     public function testGetItemsEmpty()
@@ -94,6 +106,7 @@ class StoryTest extends TestCase
             'itemFactory' => $this->itemFactoryMock,
             'storyblokClient' => $storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
+            'storeManager' => $this->storeManagerMock,
         ]);
 
         $this->assertEmpty($this->storyItemResolver->getItems(1));
@@ -200,6 +213,7 @@ class StoryTest extends TestCase
             'itemFactory' => $this->itemFactoryMock,
             'storyblokClient' => $storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
+            'storeManager' => $this->storeManagerMock,
         ]);
 
         $this->assertCount(4, $this->storyItemResolver->getItems(1));

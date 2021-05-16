@@ -2,13 +2,12 @@
 namespace MediaLounge\Storyblok\Model\ItemProvider;
 
 use Storyblok\ClientFactory;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
-use Magento\Sitemap\Model\ResourceModel\Cms\PageFactory;
-use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
-use Magento\Sitemap\Model\ItemProvider\ItemProviderInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
+use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
+use Magento\Sitemap\Model\ItemProvider\ItemProviderInterface;
 
 class Story implements ItemProviderInterface
 {
@@ -30,22 +29,16 @@ class Story implements ItemProviderInterface
     private $storyblokClient;
 
     /**
-     * @var ScopeConfigInterface
-     */
-    private $scopeConfig;
-
-    /**
      * @var StoreManagerInterface
      */
     private $storeManager;
-
 
     public function __construct(
         ConfigReaderInterface $configReader,
         SitemapItemInterfaceFactory $itemFactory,
         ScopeConfigInterface $scopeConfig,
         ClientFactory $storyblokClient,
-        StoreManagerInteface $storeManager
+        StoreManagerInterface $storeManager
     ) {
         $this->itemFactory = $itemFactory;
         $this->configReader = $configReader;
@@ -56,7 +49,7 @@ class Story implements ItemProviderInterface
                 'storyblok/general/api_key',
                 ScopeInterface::SCOPE_STORE,
                 $this->storeManager->getStore()->getId()
-            )
+            ),
         ]);
     }
 
