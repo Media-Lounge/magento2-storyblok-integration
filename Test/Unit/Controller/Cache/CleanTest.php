@@ -179,7 +179,7 @@ class CleanTest extends TestCase
             ->expects($this->once())
             ->method('clean')
             ->with(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, [
-                "storyblok_{$this->fixtureWebhookArray['story_id']}",
+                "storyblok_{$this->fixtureWebhookArray['story_id']}"
             ]);
 
         $controller = $this->objectManagerHelper->getObject(Clean::class, [
@@ -189,7 +189,7 @@ class CleanTest extends TestCase
             'cacheType' => $this->cacheTypeMock,
             'json' => $this->jsonSerializerMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'storeManager' => $this->storeManagerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $controller->execute();
@@ -219,7 +219,7 @@ class CleanTest extends TestCase
             'cacheType' => $this->cacheTypeMock,
             'json' => $this->jsonSerializerMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'storeManager' => $this->storeManagerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $controller->execute();

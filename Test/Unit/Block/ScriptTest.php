@@ -113,7 +113,7 @@ class ScriptTest extends TestCase
             ->willReturn($apiKey);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");
@@ -131,14 +131,14 @@ class ScriptTest extends TestCase
             ->withConsecutive(
                 [
                     "advanced/modules_disable_output/{$this->moduleName}",
-                    ScopeInterface::SCOPE_STORE,
+                    ScopeInterface::SCOPE_STORE
                 ],
                 ['storyblok/general/api_key']
             )
             ->willReturnOnConsecutiveCalls(false, $apiKey);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");
@@ -156,7 +156,7 @@ class ScriptTest extends TestCase
             ->withConsecutive(
                 [
                     "advanced/modules_disable_output/{$this->moduleName}",
-                    ScopeInterface::SCOPE_STORE,
+                    ScopeInterface::SCOPE_STORE
                 ],
                 ['storyblok/general/api_key']
             )
@@ -169,7 +169,7 @@ class ScriptTest extends TestCase
             ->willReturn(null);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");
@@ -188,7 +188,7 @@ class ScriptTest extends TestCase
             ->withConsecutive(
                 [
                     "advanced/modules_disable_output/{$this->moduleName}",
-                    ScopeInterface::SCOPE_STORE,
+                    ScopeInterface::SCOPE_STORE
                 ],
                 ['storyblok/general/api_key']
             )
@@ -201,7 +201,7 @@ class ScriptTest extends TestCase
             ->willReturn($storyId);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");

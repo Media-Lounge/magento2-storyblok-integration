@@ -62,7 +62,7 @@ class Router implements RouterInterface
                 'storyblok/general/api_key',
                 ScopeInterface::SCOPE_STORE,
                 $this->storeManager->getStore()->getId()
-            ),
+            )
         ]);
         $this->cache = $cache;
         $this->serializer = $serializer;
@@ -81,7 +81,7 @@ class Router implements RouterInterface
 
                 if (!$request->getParam('_storyblok') && !empty($response->getBody()['story'])) {
                     $this->cache->save($data, $identifier, [
-                        "storyblok_{$response->getBody()['story']['id']}",
+                        "storyblok_{$response->getBody()['story']['id']}"
                     ]);
                 }
             }
@@ -94,7 +94,7 @@ class Router implements RouterInterface
                     ->setControllerName('index')
                     ->setActionName('index')
                     ->setParams([
-                        'story' => $data['story'],
+                        'story' => $data['story']
                     ]);
 
                 return $this->actionFactory->create(Forward::class, ['request' => $request]);

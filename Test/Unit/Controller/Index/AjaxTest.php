@@ -129,7 +129,7 @@ class AjaxTest extends TestCase
         $controller = $this->objectManagerHelper->getObject(Ajax::class, [
             'context' => $this->contextMock,
             'json' => $this->jsonSerializerMock,
-            'resultJsonFactory' => $this->resultJsonFactoryMock,
+            'resultJsonFactory' => $this->resultJsonFactoryMock
         ]);
 
         $controller->execute();

@@ -150,10 +150,10 @@ class ContainerTest extends TestCase
             ->method('getTemplateFileName')
             ->withConsecutive(
                 [
-                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml",
+                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml"
                 ],
                 [
-                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml",
+                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml"
                 ]
             )
             ->willReturnOnConsecutiveCalls(
@@ -168,7 +168,7 @@ class ContainerTest extends TestCase
             'context' => $this->contextMock,
             'storyblokClient' => $this->storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'data' => ['story' => $fixtureStoryArray['story']],
+            'data' => ['story' => $fixtureStoryArray['story']]
         ]);
 
         $this->assertEquals('html', $block->toHtml());
@@ -215,10 +215,10 @@ class ContainerTest extends TestCase
             ->method('getTemplateFileName')
             ->withConsecutive(
                 [
-                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml",
+                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml"
                 ],
                 [
-                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml",
+                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml"
                 ]
             )
             ->willReturnOnConsecutiveCalls(
@@ -242,7 +242,7 @@ class ContainerTest extends TestCase
             'context' => $this->contextMock,
             'storyblokClient' => $this->storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'data' => ['slug' => $storySlug],
+            'data' => ['slug' => $storySlug]
         ]);
 
         $this->assertEquals('html', $block->toHtml());
@@ -271,7 +271,7 @@ class ContainerTest extends TestCase
             'context' => $this->contextMock,
             'storyblokClient' => $this->storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'data' => ['slug' => $storySlug],
+            'data' => ['slug' => $storySlug]
         ]);
 
         $this->assertEmpty($block->toHtml());
@@ -310,13 +310,13 @@ class ContainerTest extends TestCase
             ->withConsecutive(
                 [
                     [
-                        'original_template' => "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml",
-                    ],
+                        'original_template' => "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml"
+                    ]
                 ],
                 [
                     [
-                        'original_template' => "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml",
-                    ],
+                        'original_template' => "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml"
+                    ]
                 ]
             )
             ->willReturn($this->returnSelf());
@@ -335,10 +335,10 @@ class ContainerTest extends TestCase
             ->method('getTemplateFileName')
             ->withConsecutive(
                 [
-                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml",
+                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['component']}.phtml"
                 ],
                 [
-                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml",
+                    "MediaLounge_Storyblok::story/{$fixtureStoryArray['story']['content']['body'][0]['component']}.phtml"
                 ]
             )
             ->willReturn(false);
@@ -350,7 +350,7 @@ class ContainerTest extends TestCase
             'context' => $this->contextMock,
             'storyblokClient' => $this->storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'data' => ['story' => $fixtureStoryArray['story']],
+            'data' => ['story' => $fixtureStoryArray['story']]
         ]);
 
         $this->assertEquals('debug', $block->toHtml());

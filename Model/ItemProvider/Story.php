@@ -49,7 +49,7 @@ class Story implements ItemProviderInterface
                 'storyblok/general/api_key',
                 ScopeInterface::SCOPE_STORE,
                 $this->storeManager->getStore()->getId()
-            ),
+            )
         ]);
     }
 
@@ -77,7 +77,7 @@ class Story implements ItemProviderInterface
                 'url' => $item['full_slug'],
                 'updatedAt' => $item['published_at'],
                 'priority' => $this->configReader->getPriority($storeId),
-                'changeFrequency' => $this->configReader->getChangeFrequency($storeId),
+                'changeFrequency' => $this->configReader->getChangeFrequency($storeId)
             ]);
         }, $stories);
 
@@ -89,7 +89,7 @@ class Story implements ItemProviderInterface
         $response = $this->storyblokClient->getStories([
             'page' => $page,
             'per_page' => self::STORIES_PER_PAGE,
-            'filter_query[component][like]' => 'page',
+            'filter_query[component][like]' => 'page'
         ]);
 
         return $response;

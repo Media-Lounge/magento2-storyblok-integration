@@ -103,7 +103,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
             $block->setTemplate("MediaLounge_Storyblok::story/{$blockData['component']}.phtml");
         } else {
             $block->setTemplate('MediaLounge_Storyblok::story/debug.phtml')->addData([
-                'original_template' => "MediaLounge_Storyblok::story/{$blockData['component']}.phtml",
+                'original_template' => "MediaLounge_Storyblok::story/{$blockData['component']}.phtml"
             ]);
         }
 

@@ -81,14 +81,14 @@ class StoryTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('getHeaders')
             ->willReturn([
-                'Total' => [0],
+                'Total' => [0]
             ]);
 
         $storybookClientMock
             ->expects($this->any())
             ->method('getBody')
             ->willReturn([
-                'stories' => [],
+                'stories' => []
             ]);
 
         $storybookClientFactoryMock = $this->getMockBuilder(StoryblokClientFactory::class)
@@ -106,7 +106,7 @@ class StoryTest extends TestCase
             'itemFactory' => $this->itemFactoryMock,
             'storyblokClient' => $storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'storeManager' => $this->storeManagerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertEmpty($this->storyItemResolver->getItems(1));
@@ -117,12 +117,12 @@ class StoryTest extends TestCase
         $testStories = [
             [
                 'full_slug' => 'test-story',
-                'published_at' => '2021-01-16T08:55:16+00:00',
+                'published_at' => '2021-01-16T08:55:16+00:00'
             ],
             [
                 'full_slug' => 'test-story-2',
-                'published_at' => '2021-01-06T08:42:02+00:00',
-            ],
+                'published_at' => '2021-01-06T08:42:02+00:00'
+            ]
         ];
 
         $this->configReaderMock
@@ -148,14 +148,14 @@ class StoryTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('getHeaders')
             ->willReturn([
-                'Total' => [150],
+                'Total' => [150]
             ]);
 
         $storybookClientMock
             ->expects($this->any())
             ->method('getBody')
             ->willReturn([
-                'stories' => $testStories,
+                'stories' => $testStories
             ]);
 
         $sitemapItem = $this->createMock(SitemapItem::class);
@@ -168,32 +168,32 @@ class StoryTest extends TestCase
                         'url' => $testStories[0]['full_slug'],
                         'updatedAt' => $testStories[0]['published_at'],
                         'priority' => '0.25',
-                        'changeFrequency' => 'daily',
-                    ],
+                        'changeFrequency' => 'daily'
+                    ]
                 ],
                 [
                     [
                         'url' => $testStories[1]['full_slug'],
                         'updatedAt' => $testStories[1]['published_at'],
                         'priority' => '0.25',
-                        'changeFrequency' => 'daily',
-                    ],
+                        'changeFrequency' => 'daily'
+                    ]
                 ],
                 [
                     [
                         'url' => $testStories[0]['full_slug'],
                         'updatedAt' => $testStories[0]['published_at'],
                         'priority' => '0.25',
-                        'changeFrequency' => 'daily',
-                    ],
+                        'changeFrequency' => 'daily'
+                    ]
                 ],
                 [
                     [
                         'url' => $testStories[1]['full_slug'],
                         'updatedAt' => $testStories[1]['published_at'],
                         'priority' => '0.25',
-                        'changeFrequency' => 'daily',
-                    ],
+                        'changeFrequency' => 'daily'
+                    ]
                 ]
             )
             ->willReturn($sitemapItem);
@@ -213,7 +213,7 @@ class StoryTest extends TestCase
             'itemFactory' => $this->itemFactoryMock,
             'storyblokClient' => $storybookClientFactoryMock,
             'scopeConfig' => $this->scopeConfigMock,
-            'storeManager' => $this->storeManagerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertCount(4, $this->storyItemResolver->getItems(1));

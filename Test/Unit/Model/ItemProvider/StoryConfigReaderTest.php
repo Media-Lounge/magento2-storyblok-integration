@@ -28,7 +28,7 @@ class StoryConfigReaderTest extends TestCase
 
         $this->scopeConfigMock = $this->getMockForAbstractClass(ScopeConfigInterface::class);
         $this->storyConfigReader = $objectManagerHelper->getObject(StoryConfigReader::class, [
-            'scopeConfig' => $this->scopeConfigMock,
+            'scopeConfig' => $this->scopeConfigMock
         ]);
     }
 
