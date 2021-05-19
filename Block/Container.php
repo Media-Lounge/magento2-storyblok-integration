@@ -3,6 +3,7 @@ namespace MediaLounge\Storyblok\Block;
 
 use Storyblok\ApiException;
 use Magento\Framework\View\FileSystem;
+use Magento\Store\Model\ScopeInterface;
 use Storyblok\Client as StoryblokClient;
 use Magento\Framework\View\Element\AbstractBlock;
 use MediaLounge\Storyblok\Block\Container\Element;
@@ -34,7 +35,11 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
         $this->viewFileSystem = $viewFileSystem;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $scopeConfig->getValue(
+                'storyblok/general/api_key',
+                ScopeInterface::SCOPE_STORE,
+                $this->_storeManager->getStore()->getId()
+            )
         ]);
     }
 

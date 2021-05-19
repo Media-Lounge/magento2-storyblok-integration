@@ -4,25 +4,25 @@
         <tab id="medialounge" translate="label" sortOrder="0">
             <label>Media Lounge</label>
         </tab>
-        <section id="storyblok" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="0">
+        <section id="storyblok" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Storyblok</label>
             <tab>medialounge</tab>
             <resource>MediaLounge_Storyblok::storyblok_config</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="api_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="api_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>API Key</label>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
                 </field>
-                <field id="webhook_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="webhook_secret" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Webhook Secret</label>
                     <validate>required-entry validate-length minimum-length-20</validate>
                     <depends>

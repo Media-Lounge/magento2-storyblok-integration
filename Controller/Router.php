@@ -3,12 +3,14 @@ namespace MediaLounge\Storyblok\Controller;
 
 use Storyblok\ApiException;
 use Storyblok\ClientFactory;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RouterInterface;
 use Magento\Framework\App\RequestInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
@@ -39,17 +41,28 @@ class Router implements RouterInterface
      */
     private $serializer;
 
+    /**
+     * @var StoreManagerInteface
+     */
+    private $storeManager;
+
     public function __construct(
         ActionFactory $actionFactory,
         ScopeConfigInterface $scopeConfig,
         ClientFactory $storyblokClient,
         CacheInterface $cache,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        StoreManagerInterface $storeManager
     ) {
         $this->actionFactory = $actionFactory;
         $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $this->scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $this->scopeConfig->getValue(
+                'storyblok/general/api_key',
+                ScopeInterface::SCOPE_STORE,
+                $this->storeManager->getStore()->getId()
+            ),
         ]);
         $this->cache = $cache;
         $this->serializer = $serializer;
