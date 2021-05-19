@@ -3,16 +3,16 @@ namespace MediaLounge\Storyblok\Controller;
 
 use Storyblok\ApiException;
 use Storyblok\ClientFactory;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RouterInterface;
 use Magento\Framework\App\RequestInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\StoreManagerInterface;
 
 class Router implements RouterInterface
 {
