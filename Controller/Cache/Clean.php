@@ -71,9 +71,7 @@ class Clean extends Action implements HttpPostActionInterface
         $postContent = $this->json->unserialize($this->getRequest()->getContent());
 
         if ($this->isSignatureValid($this->getRequest()) && isset($postContent['story_id'])) {
-            preg_match('#\((.*?)\)#', $postContent['text'], $slug);
-
-            $tags = ["storyblok_slug_{$slug[1]}", "storyblok_{$postContent['story_id']}"];
+            $tags = [];
             $this->cacheInterface->clean($tags);
             $this->cacheType->clean(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
 
