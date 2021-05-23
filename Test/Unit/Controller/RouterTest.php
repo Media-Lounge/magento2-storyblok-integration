@@ -8,9 +8,11 @@ use Storyblok\Client as StoryblokClient;
 use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\App\ActionInterface;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\App\RequestInterface;
 use MediaLounge\Storyblok\Controller\Router;
 use PHPUnit\Framework\MockObject\MockObject;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Storyblok\ClientFactory as StoryblokClientFactory;
@@ -57,6 +59,11 @@ class RouterTest extends TestCase
      * @var CacheInterface|MockObject
      */
     private $cacheMock;
+
+    /**
+     * @var StoreManagerInterface|MockObject
+     */
+    private $storeManagerMock;
 
     /**
      * @var string
@@ -119,6 +126,11 @@ class RouterTest extends TestCase
 
         $this->cacheMock = $this->getMockForAbstractClass(CacheInterface::class);
 
+        $storeInterfaceMock = $this->getMockForAbstractClass(StoreInterface::class);
+
+        $this->storeManagerMock = $this->getMockForAbstractClass(StoreManagerInterface::class);
+        $this->storeManagerMock->method('getStore')->willReturn($storeInterfaceMock);
+
         $this->objectManagerHelper = new ObjectManagerHelper($this);
     }
 
@@ -134,7 +146,7 @@ class RouterTest extends TestCase
             ->expects($this->once())
             ->method('save')
             ->with($this->fixtureStory, $this->storySlug, [
-                "storyblok_{$this->fixtureStoryArray['story']['id']}",
+                "storyblok_{$this->fixtureStoryArray['story']['id']}"
             ])
             ->willReturn(true);
 
@@ -188,7 +200,7 @@ class RouterTest extends TestCase
             ->expects($this->once())
             ->method('setParams')
             ->with([
-                'story' => $this->fixtureStoryArray['story'],
+                'story' => $this->fixtureStoryArray['story']
             ])
             ->willReturn($this->returnSelf());
 
@@ -204,6 +216,7 @@ class RouterTest extends TestCase
             'storyblokClient' => $this->storybookClientFactoryMock,
             'cache' => $this->cacheMock,
             'serializer' => $this->serializerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertInstanceOf(ActionInterface::class, $router->match($this->requestMock));
@@ -229,6 +242,7 @@ class RouterTest extends TestCase
             'storyblokClient' => $this->storybookClientFactoryMock,
             'cache' => $this->cacheMock,
             'serializer' => $this->serializerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertNull($router->match($this->requestMock));
@@ -254,6 +268,7 @@ class RouterTest extends TestCase
             'storyblokClient' => $this->storybookClientFactoryMock,
             'cache' => $this->cacheMock,
             'serializer' => $this->serializerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertNull($router->match($this->requestMock));
@@ -300,7 +315,7 @@ class RouterTest extends TestCase
             ->expects($this->once())
             ->method('setParams')
             ->with([
-                'story' => $this->fixtureStoryArray['story'],
+                'story' => $this->fixtureStoryArray['story']
             ])
             ->willReturn($this->returnSelf());
 
@@ -316,6 +331,7 @@ class RouterTest extends TestCase
             'storyblokClient' => $this->storybookClientFactoryMock,
             'cache' => $this->cacheMock,
             'serializer' => $this->serializerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertInstanceOf(ActionInterface::class, $router->match($this->requestMock));
@@ -387,7 +403,7 @@ class RouterTest extends TestCase
             ->expects($this->once())
             ->method('setParams')
             ->with([
-                'story' => $this->fixtureStoryArray['story'],
+                'story' => $this->fixtureStoryArray['story']
             ])
             ->willReturn($this->returnSelf());
 
@@ -403,6 +419,7 @@ class RouterTest extends TestCase
             'storyblokClient' => $this->storybookClientFactoryMock,
             'cache' => $this->cacheMock,
             'serializer' => $this->serializerMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $this->assertInstanceOf(ActionInterface::class, $router->match($this->requestMock));

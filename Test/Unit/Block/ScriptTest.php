@@ -6,10 +6,12 @@ use Magento\Framework\App\State;
 use Magento\Framework\Filesystem;
 use Magento\Store\Model\ScopeInterface;
 use MediaLounge\Storyblok\Block\Script;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\App\RequestInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\View\TemplateEnginePool;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\TemplateEngineInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -74,6 +76,11 @@ class ScriptTest extends TestCase
 
         $filesystemMock->method('getDirectoryRead')->willReturn($directoryReadInterface);
 
+        $storeInterfaceMock = $this->getMockForAbstractClass(StoreInterface::class);
+
+        $storeManagerMock = $this->getMockForAbstractClass(StoreManagerInterface::class);
+        $storeManagerMock->method('getStore')->willReturn($storeInterfaceMock);
+
         $validatorMock = $this->createMock(Validator::class);
         $validatorMock->method('isValid')->willReturn(true);
 
@@ -88,6 +95,7 @@ class ScriptTest extends TestCase
         $this->contextMock->method('getResolver')->willReturn($fileResolverMock);
         $this->contextMock->method('getValidator')->willReturn($validatorMock);
         $this->contextMock->method('getEnginePool')->willReturn($templateEnginePoolMock);
+        $this->contextMock->method('getStoreManager')->willReturn($storeManagerMock);
         $this->contextMock->method('getRequest')->willReturn($this->requestMock);
         $this->contextMock->method('getScopeConfig')->willReturn($this->scopeConfigMock);
 
@@ -105,7 +113,7 @@ class ScriptTest extends TestCase
             ->willReturn($apiKey);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");
@@ -123,14 +131,14 @@ class ScriptTest extends TestCase
             ->withConsecutive(
                 [
                     "advanced/modules_disable_output/{$this->moduleName}",
-                    ScopeInterface::SCOPE_STORE,
+                    ScopeInterface::SCOPE_STORE
                 ],
                 ['storyblok/general/api_key']
             )
             ->willReturnOnConsecutiveCalls(false, $apiKey);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");
@@ -148,7 +156,7 @@ class ScriptTest extends TestCase
             ->withConsecutive(
                 [
                     "advanced/modules_disable_output/{$this->moduleName}",
-                    ScopeInterface::SCOPE_STORE,
+                    ScopeInterface::SCOPE_STORE
                 ],
                 ['storyblok/general/api_key']
             )
@@ -161,7 +169,7 @@ class ScriptTest extends TestCase
             ->willReturn(null);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");
@@ -180,7 +188,7 @@ class ScriptTest extends TestCase
             ->withConsecutive(
                 [
                     "advanced/modules_disable_output/{$this->moduleName}",
-                    ScopeInterface::SCOPE_STORE,
+                    ScopeInterface::SCOPE_STORE
                 ],
                 ['storyblok/general/api_key']
             )
@@ -193,7 +201,7 @@ class ScriptTest extends TestCase
             ->willReturn($storyId);
 
         $this->block = $this->objectManagerHelper->getObject(Script::class, [
-            'context' => $this->contextMock,
+            'context' => $this->contextMock
         ]);
 
         $this->block->setTemplate("{$this->moduleName}::script.phtml");

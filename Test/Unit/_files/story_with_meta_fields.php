@@ -22,16 +22,16 @@ return [
                     '_uid' => '1234567-1234567-1234567-1234567',
                     'title' => 'Test Title',
                     'description' => 'Test Description',
-                    '_editable' => '',
-                ],
+                    '_editable' => ''
+                ]
             ],
             'meta' => [
                 '_uid' => '11111-2222-3333-4444-555555555',
                 'title' => 'Test Meta Title',
                 'plugin' => 'meta-fields',
-                'description' => 'Test Meta Description',
+                'description' => 'Test Meta Description'
             ],
-            '_editable' => '',
+            '_editable' => ''
         ],
         'published' => false,
         'slug' => 'test-story',
@@ -53,7 +53,7 @@ return [
         'last_author' => [
             'id' => 51004,
             'userid' => 'user@email.com',
-            'friendly_name' => 'user@email.com',
+            'friendly_name' => 'user@email.com'
         ],
         'user_ids' => [],
         'space_role_ids' => [],
@@ -62,7 +62,7 @@ return [
         'position' => -10,
         'translated_stories' => [],
         'can_not_view' => false,
-        'lang' => '',
+        'lang' => ''
     ],
-    '_storyblok' => 12345678,
+    '_storyblok' => 12345678
 ];

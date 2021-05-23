@@ -126,7 +126,7 @@ class IndexTest extends TestCase
 
         $controller = $this->objectManagerHelper->getObject(Index::class, [
             'context' => $this->contextMock,
-            'pageFactory' => $this->pageFactoryMock,
+            'pageFactory' => $this->pageFactoryMock
         ]);
 
         $controller->execute();
@@ -144,7 +144,7 @@ class IndexTest extends TestCase
 
         $controller = $this->objectManagerHelper->getObject(Index::class, [
             'context' => $this->contextMock,
-            'pageFactory' => $this->pageFactoryMock,
+            'pageFactory' => $this->pageFactoryMock
         ]);
 
         $controller->execute();
@@ -173,7 +173,7 @@ class IndexTest extends TestCase
 
         $controller = $this->objectManagerHelper->getObject(Index::class, [
             'context' => $this->contextMock,
-            'pageFactory' => $this->pageFactoryMock,
+            'pageFactory' => $this->pageFactoryMock
         ]);
 
         $controller->execute();

@@ -6,9 +6,11 @@ use PHPUnit\Framework\TestCase;
 use Laminas\Http\Header\HeaderInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\CacheInterface;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\App\RequestInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Magento\Framework\Controller\Result\Json;
+use Magento\Store\Model\StoreManagerInterface;
 use MediaLounge\Storyblok\Controller\Cache\Clean;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\PageCache\Model\Cache\Type as CacheType;
@@ -67,6 +69,11 @@ class CleanTest extends TestCase
      * @var HeaderInterface|MockObject
      */
     private $headerMock;
+
+    /**
+     * @var StoreManagerInterface|MockObject
+     */
+    private $storeManagerMock;
 
     /**
      * @var string
@@ -141,6 +148,11 @@ class CleanTest extends TestCase
             ->with('storyblok/general/webhook_secret')
             ->willReturn('webhook-secret');
 
+        $storeInterfaceMock = $this->getMockForAbstractClass(StoreInterface::class);
+
+        $this->storeManagerMock = $this->getMockForAbstractClass(StoreManagerInterface::class);
+        $this->storeManagerMock->method('getStore')->willReturn($storeInterfaceMock);
+
         $this->objectManagerHelper = new ObjectManagerHelper($this);
     }
 
@@ -167,7 +179,7 @@ class CleanTest extends TestCase
             ->expects($this->once())
             ->method('clean')
             ->with(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, [
-                "storyblok_{$this->fixtureWebhookArray['story_id']}",
+                "storyblok_{$this->fixtureWebhookArray['story_id']}"
             ]);
 
         $controller = $this->objectManagerHelper->getObject(Clean::class, [
@@ -177,6 +189,7 @@ class CleanTest extends TestCase
             'cacheType' => $this->cacheTypeMock,
             'json' => $this->jsonSerializerMock,
             'scopeConfig' => $this->scopeConfigMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $controller->execute();
@@ -206,6 +219,7 @@ class CleanTest extends TestCase
             'cacheType' => $this->cacheTypeMock,
             'json' => $this->jsonSerializerMock,
             'scopeConfig' => $this->scopeConfigMock,
+            'storeManager' => $this->storeManagerMock
         ]);
 
         $controller->execute();

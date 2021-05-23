@@ -65,7 +65,7 @@ class StateTest extends TestCase
             ->getMock();
         $this->deploymentConfigMock->method('getConfigData')->willReturn([
             CacheType\Block::TYPE_IDENTIFIER => 1,
-            FullPageCache::TYPE_IDENTIFIER => 1,
+            FullPageCache::TYPE_IDENTIFIER => 1
         ]);
 
         $this->objectManagerHelper = new ObjectManagerHelper($this);
@@ -88,7 +88,7 @@ class StateTest extends TestCase
             'json' => $this->jsonMock,
             'request' => $this->requestMock,
             'config' => $this->deploymentConfigMock,
-            'writer' => $this->writerMock,
+            'writer' => $this->writerMock
         ]);
 
         foreach ($this->cacheTypes as $cacheType) {
@@ -115,7 +115,7 @@ class StateTest extends TestCase
             'json' => $this->jsonMock,
             'request' => $this->requestMock,
             'config' => $this->deploymentConfigMock,
-            'writer' => $this->writerMock,
+            'writer' => $this->writerMock
         ]);
 
         foreach ($this->cacheTypes as $cacheType) {
@@ -149,7 +149,7 @@ class StateTest extends TestCase
             'json' => $this->jsonMock,
             'request' => $this->requestMock,
             'config' => $this->deploymentConfigMock,
-            'writer' => $this->writerMock,
+            'writer' => $this->writerMock
         ]);
 
         foreach ($this->cacheTypes as $cacheType) {

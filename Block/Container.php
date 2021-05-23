@@ -3,6 +3,7 @@ namespace MediaLounge\Storyblok\Block;
 
 use Storyblok\ApiException;
 use Magento\Framework\View\FileSystem;
+use Magento\Store\Model\ScopeInterface;
 use Storyblok\Client as StoryblokClient;
 use Magento\Framework\View\Element\AbstractBlock;
 use MediaLounge\Storyblok\Block\Container\Element;
@@ -34,7 +35,11 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
         $this->viewFileSystem = $viewFileSystem;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $scopeConfig->getValue(
+                'storyblok/general/api_key',
+                ScopeInterface::SCOPE_STORE,
+                $this->_storeManager->getStore()->getId()
+            )
         ]);
     }
 
@@ -45,21 +50,22 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
     public function getIdentities(): array
     {
-        $identities = ['storyblok'];
-
-        if (!empty($this->getData('story')['id'])) {
-            $identities[] = "storyblok_{$this->getData('story')['id']}";
+        if (!empty($this->getSlug())) {
+            return ["storyblok_slug_{$this->getSlug()}"];
+        } elseif (!empty($this->getData('story')['id'])) {
+            return ["storyblok_{$this->getData('story')['id']}"];
         }
 
-        return $identities;
+        return [];
     }
 
     public function getCacheKeyInfo(): array
     {
         $info = parent::getCacheKeyInfo();
-        $info[] = 'storyblok';
 
-        if (!empty($this->getData('story')['id'])) {
+        if (!empty($this->getSlug())) {
+            $info[] = "storyblok_slug_{$this->getSlug()}";
+        } elseif (!empty($this->getData('story')['id'])) {
             $info[] = "storyblok_{$this->getData('story')['id']}";
         }
 
@@ -101,7 +107,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
             $block->setTemplate("MediaLounge_Storyblok::story/{$blockData['component']}.phtml");
         } else {
             $block->setTemplate('MediaLounge_Storyblok::story/debug.phtml')->addData([
-                'original_template' => "MediaLounge_Storyblok::story/{$blockData['component']}.phtml",
+                'original_template' => "MediaLounge_Storyblok::story/{$blockData['component']}.phtml"
             ]);
         }
 

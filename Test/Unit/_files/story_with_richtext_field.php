@@ -26,47 +26,47 @@ return [
                                 'type' => 'heading',
                                 'attrs' => [
                                     'level' => 1,
-                                    'data-test' => null,
+                                    'data-test' => null
                                 ],
                                 'content' => [
                                     0 => [
                                         'type' => 'text',
-                                        'text' => 'Test Header',
-                                    ],
-                                ],
+                                        'text' => 'Test Header'
+                                    ]
+                                ]
                             ],
                             1 => [
                                 'type' => 'paragraph',
                                 'content' => [
                                     0 => [
                                         'type' => 'text',
-                                        'text' => 'Test paragraph ',
+                                        'text' => 'Test paragraph '
                                     ],
                                     1 => [
                                         'type' => 'text',
                                         'marks' => [
                                             0 => [
-                                                'type' => 'bold',
-                                            ],
+                                                'type' => 'bold'
+                                            ]
                                         ],
-                                        'text' => 'bold',
+                                        'text' => 'bold'
                                     ],
                                     2 => [
                                         'type' => 'text',
-                                        'text' => ' ',
+                                        'text' => ' '
                                     ],
                                     3 => [
                                         'type' => 'text',
                                         'marks' => [
                                             0 => [
-                                                'type' => 'italic',
-                                            ],
+                                                'type' => 'italic'
+                                            ]
                                         ],
-                                        'text' => 'italic',
+                                        'text' => 'italic'
                                     ],
                                     4 => [
                                         'type' => 'text',
-                                        'text' => ' ',
+                                        'text' => ' '
                                     ],
                                     5 => [
                                         'type' => 'text',
@@ -78,52 +78,52 @@ return [
                                                     'uuid' => null,
                                                     'linktype' => 'url',
                                                     'target' => '_blank',
-                                                    'anchor' => null,
-                                                ],
-                                            ],
+                                                    'anchor' => null
+                                                ]
+                                            ]
                                         ],
-                                        'text' => 'link',
+                                        'text' => 'link'
                                     ],
                                     6 => [
                                         'type' => 'text',
-                                        'text' => ' ',
+                                        'text' => ' '
                                     ],
                                     7 => [
                                         'type' => 'text',
                                         'marks' => [
                                             0 => [
-                                                'type' => 'strike',
-                                            ],
+                                                'type' => 'strike'
+                                            ]
                                         ],
-                                        'text' => 'strikethrough',
+                                        'text' => 'strikethrough'
                                     ],
                                     8 => [
                                         'type' => 'text',
-                                        'text' => ' ',
+                                        'text' => ' '
                                     ],
                                     9 => [
                                         'type' => 'text',
                                         'marks' => [
                                             0 => [
-                                                'type' => 'underline',
-                                            ],
+                                                'type' => 'underline'
+                                            ]
                                         ],
-                                        'text' => 'underline',
+                                        'text' => 'underline'
                                     ],
                                     10 => [
                                         'type' => 'text',
-                                        'text' => ' ',
+                                        'text' => ' '
                                     ],
                                     11 => [
                                         'type' => 'unknown',
                                         'content' => [
                                             0 => [
                                                 'type' => 'text',
-                                                'text' => 'unknown',
-                                            ],
-                                        ],
-                                    ],
-                                ],
+                                                'text' => 'unknown'
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ],
                             2 => [
                                 'type' => 'bullet_list',
@@ -136,11 +136,11 @@ return [
                                                 'content' => [
                                                     0 => [
                                                         'type' => 'text',
-                                                        'text' => 'List Item 1',
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
+                                                        'text' => 'List Item 1'
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
                                     ],
                                     1 => [
                                         'type' => 'list_item',
@@ -150,13 +150,13 @@ return [
                                                 'content' => [
                                                     0 => [
                                                         'type' => 'text',
-                                                        'text' => 'List Item 2',
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
+                                                        'text' => 'List Item 2'
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ],
                             3 => [
                                 'type' => 'paragraph',
@@ -165,10 +165,10 @@ return [
                                         'type' => 'image',
                                         'attrs' => [
                                             'src' =>
-                                                'https://a.storyblok.com/f/123123/800x600/123123123/image.jpg',
-                                        ],
-                                    ],
-                                ],
+                                                'https://a.storyblok.com/f/123123/800x600/123123123/image.jpg'
+                                        ]
+                                    ]
+                                ]
                             ],
                             4 => [
                                 'type' => 'paragraph',
@@ -179,15 +179,15 @@ return [
                                             'src' =>
                                                 'https://a.storyblok.com/f/123123/800x600/123123123/image.jpg',
                                             'alt' => '',
-                                            'title' => '',
-                                        ],
-                                    ],
-                                ],
+                                            'title' => ''
+                                        ]
+                                    ]
+                                ]
                             ],
                             5 => [
                                 'type' => 'ordered_list',
                                 'attrs' => [
-                                    'order' => 1,
+                                    'order' => 1
                                 ],
                                 'content' => [
                                     0 => [
@@ -198,11 +198,11 @@ return [
                                                 'content' => [
                                                     0 => [
                                                         'type' => 'text',
-                                                        'text' => 'List Item 1',
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
+                                                        'text' => 'List Item 1'
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
                                     ],
                                     1 => [
                                         'type' => 'list_item',
@@ -212,13 +212,13 @@ return [
                                                 'content' => [
                                                     0 => [
                                                         'type' => 'text',
-                                                        'text' => 'List Item 2',
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
+                                                        'text' => 'List Item 2'
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ],
                             6 => [
                                 'type' => 'blockquote',
@@ -228,34 +228,34 @@ return [
                                         'content' => [
                                             0 => [
                                                 'type' => 'text',
-                                                'text' => 'Test Quote',
-                                            ],
-                                        ],
-                                    ],
-                                ],
+                                                'text' => 'Test Quote'
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ],
                             7 => [
-                                'type' => 'horizontal_rule',
+                                'type' => 'horizontal_rule'
                             ],
                             8 => [
                                 'type' => 'code_block',
                                 'attrs' => [
-                                    'class' => 'language-php',
+                                    'class' => 'language-php'
                                 ],
                                 'content' => [
                                     0 => [
                                         'type' => 'text',
-                                        'text' => 'echo "test";',
-                                    ],
-                                ],
-                            ],
-                        ],
+                                        'text' => 'echo "test";'
+                                    ]
+                                ]
+                            ]
+                        ]
                     ],
                     'component' => 'description',
-                    '_editable' => '',
-                ],
+                    '_editable' => ''
+                ]
             ],
-            '_editable' => '',
+            '_editable' => ''
         ],
         'published' => false,
         'slug' => 'test-story',
@@ -277,7 +277,7 @@ return [
         'last_author' => [
             'id' => 51004,
             'userid' => 'user@email.com',
-            'friendly_name' => 'user@email.com',
+            'friendly_name' => 'user@email.com'
         ],
         'user_ids' => [],
         'space_role_ids' => [],
@@ -286,7 +286,7 @@ return [
         'position' => -10,
         'translated_stories' => [],
         'can_not_view' => false,
-        'lang' => '',
+        'lang' => ''
     ],
-    '_storyblok' => 12345678,
+    '_storyblok' => 12345678
 ];

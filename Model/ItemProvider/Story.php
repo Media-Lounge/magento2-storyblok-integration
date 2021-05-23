@@ -2,9 +2,10 @@
 namespace MediaLounge\Storyblok\Model\ItemProvider;
 
 use Storyblok\ClientFactory;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sitemap\Model\SitemapItemInterfaceFactory;
-use Magento\Sitemap\Model\ResourceModel\Cms\PageFactory;
 use Magento\Sitemap\Model\ItemProvider\ConfigReaderInterface;
 use Magento\Sitemap\Model\ItemProvider\ItemProviderInterface;
 
@@ -28,21 +29,27 @@ class Story implements ItemProviderInterface
     private $storyblokClient;
 
     /**
-     * @var ScopeConfigInterface
+     * @var StoreManagerInterface
      */
-    private $scopeConfig;
+    private $storeManager;
 
     public function __construct(
         ConfigReaderInterface $configReader,
         SitemapItemInterfaceFactory $itemFactory,
         ScopeConfigInterface $scopeConfig,
-        ClientFactory $storyblokClient
+        ClientFactory $storyblokClient,
+        StoreManagerInterface $storeManager
     ) {
         $this->itemFactory = $itemFactory;
         $this->configReader = $configReader;
         $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $this->scopeConfig->getValue('storyblok/general/api_key'),
+            'apiKey' => $scopeConfig->getValue(
+                'storyblok/general/api_key',
+                ScopeInterface::SCOPE_STORE,
+                $this->storeManager->getStore()->getId()
+            )
         ]);
     }
 
@@ -70,7 +77,7 @@ class Story implements ItemProviderInterface
                 'url' => $item['full_slug'],
                 'updatedAt' => $item['published_at'],
                 'priority' => $this->configReader->getPriority($storeId),
-                'changeFrequency' => $this->configReader->getChangeFrequency($storeId),
+                'changeFrequency' => $this->configReader->getChangeFrequency($storeId)
             ]);
         }, $stories);
 
@@ -82,7 +89,7 @@ class Story implements ItemProviderInterface
         $response = $this->storyblokClient->getStories([
             'page' => $page,
             'per_page' => self::STORIES_PER_PAGE,
-            'filter_query[component][like]' => 'page',
+            'filter_query[component][like]' => 'page'
         ]);
 
         return $response;
