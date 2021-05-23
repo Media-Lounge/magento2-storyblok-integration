@@ -173,12 +173,13 @@ class CleanTest extends TestCase
         $this->cacheInterfaceMock
             ->expects($this->once())
             ->method('clean')
-            ->with(["storyblok_{$this->fixtureWebhookArray['story_id']}"]);
+            ->with(['storyblok_slug_test', "storyblok_{$this->fixtureWebhookArray['story_id']}"]);
 
         $this->cacheTypeMock
             ->expects($this->once())
             ->method('clean')
             ->with(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, [
+                'storyblok_slug_test',
                 "storyblok_{$this->fixtureWebhookArray['story_id']}"
             ]);
 
