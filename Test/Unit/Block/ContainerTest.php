@@ -247,7 +247,7 @@ class ContainerTest extends TestCase
 
         $this->assertEquals('html', $block->toHtml());
         $this->assertContains("storyblok_slug_{$storySlug}", $block->getIdentities());
-        $this->assertContains("storyblok_slug_{$storySlug}", $block->getCacheKeyInfo());
+        $this->assertContains("storyblok_{$fixtureStoryArray['story']['id']}", $block->getCacheKeyInfo());
     }
 
     public function testDoesNotRenderStoryIfNotFound()
