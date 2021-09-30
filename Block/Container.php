@@ -63,10 +63,10 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     {
         $info = parent::getCacheKeyInfo();
 
-        if (!empty($this->getSlug())) {
-            $info[] = "storyblok_slug_{$this->getSlug()}";
-        } elseif (!empty($this->getData('story')['id'])) {
+        if (!empty($this->getData('story')['id'])) {
             $info[] = "storyblok_{$this->getData('story')['id']}";
+        } elseif (!empty($this->getSlug())) {
+            $info[] = "storyblok_slug_{$this->getSlug()}";
         }
 
         return $info;
