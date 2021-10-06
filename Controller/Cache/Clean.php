@@ -106,6 +106,7 @@ class Clean extends Action implements HttpPostActionInterface
     private function cleanPageCache()
     {
         $types = ['layout', 'full_page', 'block_html'];
+
         foreach ($types as $type) {
             $this->cacheTypeList->cleanType($type);
         }
