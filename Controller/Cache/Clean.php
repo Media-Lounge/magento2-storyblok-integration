@@ -88,7 +88,10 @@ class Clean extends Action implements HttpPostActionInterface
                 $this->cacheType->clean(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
 
                 $success = true;
-            } elseif (isset($postContent['action']) && $postContent['action'] === 'release_merged') {
+            } elseif (
+                isset($postContent['action']) &&
+                $postContent['action'] === 'release_merged'
+            ) {
                 $this->cleanPageCache();
                 $success = true;
             }
