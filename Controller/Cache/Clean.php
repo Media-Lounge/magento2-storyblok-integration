@@ -1,10 +1,12 @@
 <?php
+
 namespace MediaLounge\Storyblok\Controller\Cache;
 
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\CacheInterface;
+use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Serialize\Serializer\Json;
@@ -46,6 +48,11 @@ class Clean extends Action implements HttpPostActionInterface
      */
     private $storeManager;
 
+    /**
+     * @var TypeListInterface
+     */
+    private $cacheTypeList;
+
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
@@ -53,7 +60,8 @@ class Clean extends Action implements HttpPostActionInterface
         CacheType $cacheType,
         Json $json,
         ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        TypeListInterface $cacheTypeList
     ) {
         parent::__construct($context);
 
@@ -63,6 +71,7 @@ class Clean extends Action implements HttpPostActionInterface
         $this->json = $json;
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
+        $this->cacheTypeList = $cacheTypeList;
     }
 
     public function execute(): ResultInterface
@@ -70,20 +79,37 @@ class Clean extends Action implements HttpPostActionInterface
         $success = false;
         $postContent = $this->json->unserialize($this->getRequest()->getContent());
 
-        if ($this->isSignatureValid($this->getRequest()) && isset($postContent['story_id'])) {
-            preg_match('#\((.*?)\)#', $postContent['text'], $slug);
+        if ($this->isSignatureValid($this->getRequest())) {
+            if (isset($postContent['story_id'])) {
+                preg_match('#\((.*?)\)#', $postContent['text'], $slug);
 
-            $tags = ["storyblok_slug_{$slug[1]}", "storyblok_{$postContent['story_id']}"];
-            $this->cacheInterface->clean($tags);
-            $this->cacheType->clean(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
+                $tags = ["storyblok_slug_{$slug[1]}", "storyblok_{$postContent['story_id']}"];
+                $this->cacheInterface->clean($tags);
+                $this->cacheType->clean(\Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
 
-            $success = true;
+                $success = true;
+            } elseif (isset($postContent['action']) && $postContent['action'] === 'release_merged') {
+                $this->cleanPageCache();
+                $success = true;
+            }
         }
 
         $result = $this->resultJsonFactory->create();
         $result->setData(['success' => $success]);
 
         return $result;
+    }
+
+    /**
+     * Clean page cache
+     */
+    private function cleanPageCache()
+    {
+        $types = ['layout', 'full_page', 'block_html'];
+
+        foreach ($types as $type) {
+            $this->cacheTypeList->cleanType($type);
+        }
     }
 
     /**
