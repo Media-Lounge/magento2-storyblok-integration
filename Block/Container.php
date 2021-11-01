@@ -96,7 +96,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     private function createBlockFromData(array $blockData): Element
     {
         $block = $this->getLayout()
-            ->createBlock(Element::class, $blockData['_uid'])
+            ->createBlock(Element::class, $this->getNameInLayout() . '_' . $blockData['_uid'])
             ->setData($blockData);
 
         $templatePath = $this->viewFileSystem->getTemplateFileName(
