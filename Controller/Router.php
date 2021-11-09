@@ -72,6 +72,19 @@ class Router implements RouterInterface
     {
         $identifier = trim($request->getPathInfo(), '/');
 
+        $storeLanguage = $this->scopeConfig->getValue(
+            \Magento\Directory\Helper\Data::XML_PATH_DEFAULT_LOCALE,
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        );
+
+        if ($storeLanguage !== 'en_GB') {
+            $identifier =
+                strpos($identifier, $storeLanguage) !== 0
+                    ? strtolower(str_replace('_', '-', $storeLanguage)) . "/{$identifier}"
+                    : $identifier;
+        }
+
         try {
             $data = $this->cache->load($identifier);
 

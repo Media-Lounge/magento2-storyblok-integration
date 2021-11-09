@@ -24,6 +24,11 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
      */
     private $viewFileSystem;
 
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
     public function __construct(
         FileSystem $viewFileSystem,
         StoryblokClientFactory $storyblokClient,
@@ -34,13 +39,33 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
         parent::__construct($context, $data);
 
         $this->viewFileSystem = $viewFileSystem;
+        $this->scopeConfig = $scopeConfig;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $scopeConfig->getValue(
+            'apiKey' => $this->scopeConfig->getValue(
                 'storyblok/general/api_key',
                 ScopeInterface::SCOPE_STORE,
                 $this->_storeManager->getStore()->getId()
             )
         ]);
+    }
+
+    public function getSlug()
+    {
+        $slug = $this->getData('slug');
+        $storeLanguage = $this->scopeConfig->getValue(
+            \Magento\Directory\Helper\Data::XML_PATH_DEFAULT_LOCALE,
+            ScopeInterface::SCOPE_STORE,
+            $this->_storeManager->getStore()->getId()
+        );
+
+        if ($storeLanguage !== 'en_GB') {
+            $slug =
+                strpos($slug, $storeLanguage) !== 0
+                    ? strtolower(str_replace('_', '-', $storeLanguage)) . "/{$slug}"
+                    : $slug;
+        }
+
+        return $slug;
     }
 
     public function getCacheLifetime(): int
