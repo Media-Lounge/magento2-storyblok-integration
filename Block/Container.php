@@ -96,11 +96,13 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     private function createBlockFromData(array $blockData): Element
     {
         $block = $this->getLayout()
-        ->createBlock(
-            Element::class,
-            $this->getNameInLayout() ? ($this->getNameInLayout() . '_' . $blockData['_uid']) : $blockData['_uid']
-        )
-        ->setData($blockData);
+            ->createBlock(
+                Element::class,
+                $this->getNameInLayout()
+                    ? $this->getNameInLayout() . '_' . $blockData['_uid']
+                    : $blockData['_uid']
+            )
+            ->setData($blockData);
 
         $templatePath = $this->viewFileSystem->getTemplateFileName(
             "MediaLounge_Storyblok::story/{$blockData['component']}.phtml"
