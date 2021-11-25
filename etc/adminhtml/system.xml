@@ -29,6 +29,13 @@
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
                 </field>
+                <field id="top_folder" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Level Folder</label>
+                    <comment><![CDATA[Set the top level <a href="https://www.storyblok.com/docs/terminology/folder" target="_blank">folder</a> to seperate stories for each Magento store and/or for store <a href="https://www.storyblok.com/docs/guide/in-depth/internationalization#folder-level-translation" target="_blank">internationalization</a>. e.g. fr-fr]]></comment>
+                    <depends>
+                        <field id="storyblok/general/enabled">1</field>
+                    </depends>
+                </field>
             </group>
         </section>
         <section id="sitemap">
