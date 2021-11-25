@@ -63,7 +63,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
         return $topLevelFolder . "/{$slug}";
     }
 
-    public function getCacheLifetime(): int
+    public function getCacheLifetime()
     {
         return parent::getCacheLifetime() ?: 3600;
     }
@@ -116,7 +116,12 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     private function createBlockFromData(array $blockData): Element
     {
         $block = $this->getLayout()
-            ->createBlock(Element::class, $blockData['_uid'])
+            ->createBlock(
+                Element::class,
+                $this->getNameInLayout()
+                    ? $this->getNameInLayout() . '_' . $blockData['_uid']
+                    : $blockData['_uid']
+            )
             ->setData($blockData);
 
         $templatePath = $this->viewFileSystem->getTemplateFileName(
