@@ -77,13 +77,14 @@ class Router implements RouterInterface
 
             if (!$data || $request->getParam('_storyblok')) {
                 $response = $this->storyblokClient->getStoryBySlug($identifier);
+                $content = $response->getBody()['story']['content'];
 
                 $uidRows = $this->getUidRows($content);
                 if (!empty($uidRows)) {
                     $response = $this->storyblokClient->resolveRelations(implode(',', array_keys($uidRows)))->getStoryBySlug($identifier);
+                    $content = $response->getBody()['story']['content'];
                 }
-
-                $content = $response->getBody()['story']['content'];
+                
                 $data = $this->serializer->serialize($response->getBody());
 
                 if (!$request->getParam('_storyblok') && !empty($response->getBody()['story'])) {
