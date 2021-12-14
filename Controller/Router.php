@@ -77,6 +77,13 @@ class Router implements RouterInterface
 
             if (!$data || $request->getParam('_storyblok')) {
                 $response = $this->storyblokClient->getStoryBySlug($identifier);
+
+                $uidRows = $this->getUidRows($content);
+                if (!empty($uidRows)) {
+                    $response = $this->storyblokClient->resolveRelations(implode(',', array_keys($uidRows)))->getStoryBySlug($identifier);
+                }
+
+                $content = $response->getBody()['story']['content'];
                 $data = $this->serializer->serialize($response->getBody());
 
                 if (!$request->getParam('_storyblok') && !empty($response->getBody()['story'])) {
@@ -104,5 +111,19 @@ class Router implements RouterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param $content
+     * @return array
+     * Checks if the content from Storyblok contains uid as values - which means we need to resolve relations
+     */
+    private function getUidRows(array $content): array
+    {
+        return array_filter($content, function($value, $key) {
+            if (!is_string($value) || $key === '_uid') return false;
+            preg_match('/^([A-F0-9]{8})-([A-F0-9]{4})-([A-F0-9]{4})-([A-F0-9]{4})-([A-F0-9]{12})$/i', $value, $output_array);
+            return !empty($output_array);
+        }, ARRAY_FILTER_USE_BOTH);
     }
 }
