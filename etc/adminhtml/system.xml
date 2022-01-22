@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="medialounge" translate="label" sortOrder="0">
+        <tab id="medialounge" translate="label" sortOrder="110" class='medialounge-logo'>
             <label>Media Lounge</label>
         </tab>
         <section id="storyblok" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -28,6 +28,13 @@
                     <depends>
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
+                </field>
+            </group>
+            <group id="dev" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Developer</label>
+                <field id="enabled_debug_request" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Debug Request</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
         </section>
