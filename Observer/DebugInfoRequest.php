@@ -2,13 +2,11 @@
 
 namespace MediaLounge\Storyblok\Observer;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\ClientFactory;
 use GuzzleHttp\Exception\GuzzleException;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\Webapi\Rest\Request;
 use Psr\Log\LoggerInterface;
 
 class DebugInfoRequest implements ObserverInterface
@@ -72,10 +70,14 @@ class DebugInfoRequest implements ObserverInterface
     {
         /** @var \Magento\Framework\App\RequestInterface $request */
         $request = $observer->getEvent()->getRequest();
+        $isInStoryblokSection = $request->getParam('section') === 'storyblok';
 
-        /* todo: suggest: Add License check only send request if not license instead of admin setting value*/
-        $isEnable = $this->storeConfig->isSetFlag('storyblok/dev/enabled_debug_request');
-        if ($isEnable) {
+        $isEnabled = $this->storeConfig->isSetFlag('storyblok/general/enabled');
+        //debug flag $isDebugEnabled
+        $isDebugEnabled = $this->storeConfig->isSetFlag('storyblok/dev/enabled_debug_request');
+
+        /* todo : suggest: Add License check only send request if not license instead of admin setting value*/
+        if ($isEnabled && $isInStoryblokSection && $isDebugEnabled) {
             $debugInfo = [
                 'host' => $this->storeManager->getStore()->getBaseUrl(),
                 'version' => $this->magentoMeta->getVersion(),
@@ -106,7 +108,7 @@ class DebugInfoRequest implements ObserverInterface
                 $params
             );
         } catch (GuzzleException $exception) {
-            $this->logger->error("Storyblok Send Debug Error: " . $exception->getMessage());
+            $this->logger->error("Storyblok Debug Error " . $exception->getMessage());
         }
     }
 }
