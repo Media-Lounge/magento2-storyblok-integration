@@ -1,11 +1,9 @@
 (function () {
     let controller = { abort: () => {} };
-
-    function enterEditMode() {
-        if (storyblok.inEditor) {
-            storyblok.enterEditmode();
-        }
-    }
+    const { StoryblokBridge } = window;
+    const storyblokInstance = new StoryblokBridge({
+        preventClicks: true
+    });
 
     function isStoryblokComment(node) {
         if (node.textContent.includes('#storyblok#')) {
@@ -35,16 +33,13 @@
         return comments;
     }
 
-    storyblok.on(['published', 'change'], () => window.location.reload());
+    storyblokInstance.on(['published', 'change'], () => window.location.reload());
 
-    storyblok.on(['input'], async ({ story }) => {
+    storyblokInstance.on(['input'], async ({ story }) => {
         controller.abort();
 
         controller = new AbortController();
         const { signal } = controller;
-        const storyContentWithComments = storyblok.addComments(story.content, story.id);
-
-        story.content = storyContentWithComments;
 
         try {
             const request = await fetch('/storyblok/index/ajax', {
@@ -65,11 +60,9 @@
             comments[blockId].comment.remove();
             comments[blockId].element.outerHTML = response[blockId];
 
-            enterEditMode();
+            storyblokInstance.enterEditmode();
         } catch (err) {
             return;
         }
     });
-
-    storyblok.pingEditor(() => enterEditMode());
 })();

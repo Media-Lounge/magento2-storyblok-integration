@@ -1,14 +1,12 @@
 define(['jquery', 'storyblok'], ($, storyblok) => {
     'use strict';
 
-    return ({ apiKey }) => {
+    return () => {
         let request = { abort: () => {} };
-
-        function enterEditMode() {
-            if (storyblok.inEditor) {
-                storyblok.enterEditmode();
-            }
-        }
+        const { StoryblokBridge } = window;
+        const storyblokInstance = new StoryblokBridge({
+            preventClicks: true
+        });
 
         function isStoryblokComment(node) {
             if (node.textContent.includes('#storyblok#')) {
@@ -38,17 +36,9 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
             return comments;
         }
 
-        storyblok.init({
-            accessToken: apiKey
-        });
+        storyblokInstance.on(['published', 'change'], () => window.location.reload());
 
-        storyblok.on(['published', 'change'], () => window.location.reload());
-
-        storyblok.on(['input'], ({ story }) => {
-            const storyContentWithComments = storyblok.addComments(story.content, story.id);
-
-            story.content = storyContentWithComments;
-
+        storyblokInstance.on(['input'], ({ story }) => {
             request.abort();
 
             request = $.post({
@@ -70,10 +60,8 @@ define(['jquery', 'storyblok'], ($, storyblok) => {
 
                 $('body').trigger('contentUpdated');
 
-                enterEditMode();
+                storyblokInstance.enterEditmode();
             });
         });
-
-        storyblok.pingEditor(() => enterEditMode());
     };
 });
