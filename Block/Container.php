@@ -133,7 +133,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
 
                     $childBlock = $this->createBlockFromData($childData);
 
-                    $parentBlock->append($childBlock);
+                    $parentBlock->append($childBlock, $childBlock->getData('_uid'));
                 }
             }
         }
