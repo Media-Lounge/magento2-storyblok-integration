@@ -2,7 +2,7 @@
     "name": "medialounge/magento2-storyblok-integration",
     "description": "Magento 2 extension to integrate Storyblok visual editor",
     "type": "magento2-module",
-    "version": "2.0.0",
+    "version": "2.2.0",
     "license": "GPL-3.0-only",
     "authors": [
         {
@@ -25,12 +25,12 @@
         }
     },
     "require": {
-        "php": "^7.3.0|^8.0.0",
-        "magento/framework": "^102.0|^103.0",
-        "magento/module-page-cache": "100.3.*|100.4.*",
-        "magento/module-sitemap": "100.3.*|100.4.*",
-        "storyblok/php-client": "^1.5",
-        "storyblok/richtext-resolver": "^1.0"
+        "php": "^8.0.0",
+        "magento/framework": "^103.0",
+        "magento/module-page-cache": "100.4.*",
+        "magento/module-sitemap": "100.4.*",
+        "storyblok/php-client": "^2.5",
+        "storyblok/richtext-resolver": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0.0",

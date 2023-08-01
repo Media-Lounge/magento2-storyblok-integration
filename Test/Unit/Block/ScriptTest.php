@@ -69,6 +69,8 @@ class ScriptTest extends TestCase
         $fileResolverMock = $this->getMockBuilder(Resolver::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $fileResolverMock->method('getTemplateFileName')->willReturn('template.phtml');
+
         $filesystemMock = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
