@@ -15,10 +15,10 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Setup PHP 7.3
+            - name: Setup PHP 8.0
               uses: shivammathur/setup-php@master
               with:
-                  php-version: '7.3'
+                  php-version: '8.0'
                   extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1, prestissimo
             - name: Install composer dependencies

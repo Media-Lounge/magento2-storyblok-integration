@@ -9,16 +9,16 @@ on:
             - master
 
 jobs:
-    php73:
+    php80:
         runs-on: ubuntu-18.04
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Setup PHP 7.3
+            - name: Setup PHP 8.0
               uses: shivammathur/setup-php@master
               with:
-                  php-version: '7.3'
+                  php-version: '8.0'
                   extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1, prestissimo
             - name: Install composer dependencies
@@ -33,16 +33,16 @@ jobs:
               with:
                   name: report
                   path: /tmp/report.xml
-    php74:
+    php81:
         runs-on: ubuntu-18.04
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Setup PHP 7.4
+            - name: Setup PHP 8.1
               uses: shivammathur/setup-php@master
               with:
-                  php-version: '7.4'
+                  php-version: '8.1'
                   extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
                   tools: composer:v1, prestissimo
             - name: Install composer dependencies
@@ -57,9 +57,33 @@ jobs:
               with:
                   name: report
                   path: /tmp/report.xml
+    php82:
+      runs-on: ubuntu-18.04
+      steps:
+          - name: Checkout code
+            uses: actions/checkout@v2
+
+          - name: Setup PHP 8.2
+            uses: shivammathur/setup-php@master
+            with:
+                php-version: '8.2'
+                extensions: gd, intl, xsl, zip, pdo, pdo_mysql, soap, bcmath, sodium
+                tools: composer:v1, prestissimo
+          - name: Install composer dependencies
+            run: |
+                composer global config http-basic.repo.magento.com ${{ secrets.MAGENTO_PUBLIC_KEY }} ${{ secrets.MAGENTO_PRIVATE_KEY }}
+                composer install --prefer-dist --no-interaction --no-progress --no-suggest
+          - name: Run phpunit
+            run: |
+                ./vendor/bin/phpunit --testdox --coverage-clover=/tmp/report.xml
+          - name: Save code coverage report artifact
+            uses: actions/upload-artifact@v2
+            with:
+                name: report
+                path: /tmp/report.xml
     codecov:
         runs-on: ubuntu-18.04
-        needs: [php73, php74]
+        needs: [php80, php81, php82]
         steps:
             - name: Download code coverage report artifact
               uses: actions/download-artifact@v2
