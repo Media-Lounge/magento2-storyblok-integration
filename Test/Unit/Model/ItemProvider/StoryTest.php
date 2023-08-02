@@ -37,6 +37,16 @@ class StoryTest extends TestCase
     private $storeManagerMock;
 
     /**
+     * @var ObjectManagerHelper
+     */
+    private $objectManagerHelper;
+
+    /**
+     * @var StoryItemResolver
+     */
+    private $storyItemResolver;
+
+    /**
      * @var string
      */
     private $apiKey;
