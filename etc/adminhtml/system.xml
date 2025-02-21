@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="medialounge" translate="label" sortOrder="0">
+        <tab id="medialounge" translate="label" sortOrder="999">
             <label>Media Lounge</label>
         </tab>
         <section id="storyblok" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
