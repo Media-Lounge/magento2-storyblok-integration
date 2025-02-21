@@ -1,4 +1,5 @@
 <?php
+
 namespace MediaLounge\Storyblok\Block;
 
 use Storyblok\ApiException;
@@ -10,6 +11,7 @@ use MediaLounge\Storyblok\Block\Container\Element;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use MediaLounge\Storyblok\Model\PrefixSlug;
 use Storyblok\ClientFactory as StoryblokClientFactory;
 
 class Container extends \Magento\Framework\View\Element\Template implements IdentityInterface
@@ -24,10 +26,16 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
      */
     private $viewFileSystem;
 
+    /**
+     * @var PrefixSlug
+     */
+    private $prefixSlug;
+
     public function __construct(
         FileSystem $viewFileSystem,
         StoryblokClientFactory $storyblokClient,
         ScopeConfigInterface $scopeConfig,
+        PrefixSlug $prefixSlug,
         Context $context,
         array $data = []
     ) {
@@ -41,6 +49,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
                 $this->_storeManager->getStore()->getId()
             )
         ]);
+        $this->prefixSlug = $prefixSlug;
     }
 
     public function getCacheLifetime()
@@ -76,7 +85,9 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
     {
         if (!$this->getData('story')) {
             try {
-                $storyblokClient = $this->storyblokClient->getStoryBySlug($this->getSlug());
+                $slug = $this->getSlug();
+                $slug = ($this->prefixSlug)($slug);
+                $storyblokClient = $this->storyblokClient->getStoryBySlug($slug);
                 $data = $storyblokClient->getBody();
 
                 $this->setData('story', $data['story']);

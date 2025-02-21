@@ -29,6 +29,13 @@
                         <field id="storyblok/general/enabled">1</field>
                     </depends>
                 </field>
+                <field id="slug_prefix" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Slug Prefix</label>
+                    <comment>Add a prefix to the slug to fetch content from a folder.</comment>
+                    <depends>
+                        <field id="storyblok/general/enabled">1</field>
+                    </depends>
+                </field>
             </group>
             <group id="home_page" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Home Page</label>

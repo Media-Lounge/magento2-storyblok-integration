@@ -1,4 +1,5 @@
 <?php
+
 namespace MediaLounge\Storyblok\Controller;
 
 use Storyblok\ApiException;
@@ -13,6 +14,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use MediaLounge\Storyblok\Model\PrefixSlug;
 
 class Router implements RouterInterface
 {
@@ -46,13 +48,19 @@ class Router implements RouterInterface
      */
     private $storeManager;
 
+    /**
+     * @var PrefixSlug
+     */
+    private $prefixSlug;
+
     public function __construct(
         ActionFactory $actionFactory,
         ScopeConfigInterface $scopeConfig,
         ClientFactory $storyblokClient,
         CacheInterface $cache,
         SerializerInterface $serializer,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        PrefixSlug $prefixSlug
     ) {
         $this->actionFactory = $actionFactory;
         $this->scopeConfig = $scopeConfig;
@@ -66,11 +74,13 @@ class Router implements RouterInterface
         ]);
         $this->cache = $cache;
         $this->serializer = $serializer;
+        $this->prefixSlug = $prefixSlug;
     }
 
     public function match(RequestInterface $request): ?ActionInterface
     {
         $identifier = trim($request->getPathInfo(), '/');
+        $identifier = ($this->prefixSlug)($identifier);
 
         try {
             $data = $this->cache->load($identifier);
