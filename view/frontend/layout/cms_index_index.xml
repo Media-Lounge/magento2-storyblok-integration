@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="content">
-            <block name="storyblok" class="MediaLounge\Storyblok\Block\Container">
+            <block name="storyblok" class="MediaLounge\Storyblok\Block\Container" ifconfig="storyblok/general/enabled">
                 <arguments>
                     <argument name="slug" xsi:type="object">MediaLounge\Storyblok\Model\HomeSlug</argument>
                 </arguments>
