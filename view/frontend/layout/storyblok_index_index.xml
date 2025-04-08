@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="1column">
     <body>
+        <referenceBlock name="head.additional">
+            <block name="head.storyblok.hreflangs" template="MediaLounge_Storyblok::head/hreflangs.phtml" before="-" />
+        </referenceBlock>
+
         <referenceContainer name="content">
             <block class="MediaLounge\Storyblok\Block\Container" name="storyblok.page" />
         </referenceContainer>

@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Hyva\Theme\Model\ViewModelRegistry $viewModels */
+
+$hreflangViewModel =  $viewModels->require(\MediaLounge\Storyblok\ViewModel\Hreflang::class);
+
+echo html_entity_decode($hreflangViewModel->getHreflangs());
+?>

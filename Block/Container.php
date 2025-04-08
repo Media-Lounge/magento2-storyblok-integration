@@ -104,7 +104,7 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
         return count($data) !== count($data, COUNT_RECURSIVE);
     }
 
-    private function createBlockFromData(array $blockData): Element
+    public function createBlockFromData(array $blockData): Element
     {
         $block = $this->getLayout()
             ->createBlock(

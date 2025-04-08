@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+    <update handle="1column"/>
+    <referenceContainer name="main.content" htmlTag="main" htmlClass="page-main-full-width">
+        <block name="storyblok" class="MediaLounge\Storyblok\Block\Container" before="-">
+            <arguments>
+                <argument name="slug" xsi:type="object">MediaLounge\Storyblok\Model\StoreFinderResolver</argument>
+            </arguments>
+        </block>
+    </referenceContainer>
+</layout>
