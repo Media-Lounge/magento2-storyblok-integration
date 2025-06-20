@@ -71,6 +71,13 @@ class Router implements RouterInterface
     public function match(RequestInterface $request): ?ActionInterface
     {
         $identifier = trim($request->getPathInfo(), '/');
+        $topLevelFolder = $this->scopeConfig->getValue(
+            'storyblok/general/top_folder',
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        );
+
+        $identifier = $topLevelFolder . "/{$identifier}";
 
         try {
             $data = $this->cache->load($identifier);

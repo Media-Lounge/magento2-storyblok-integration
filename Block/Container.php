@@ -10,6 +10,7 @@ use MediaLounge\Storyblok\Block\Container\Element;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\StoreManagerInterface;
 use Storyblok\ClientFactory as StoryblokClientFactory;
 
 class Container extends \Magento\Framework\View\Element\Template implements IdentityInterface
@@ -24,23 +25,42 @@ class Container extends \Magento\Framework\View\Element\Template implements Iden
      */
     private $viewFileSystem;
 
+    /**
+     * @var StoreManagerInteface
+     */
+    private $storeManager;
+
     public function __construct(
         FileSystem $viewFileSystem,
         StoryblokClientFactory $storyblokClient,
         ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager,
         Context $context,
         array $data = []
     ) {
         parent::__construct($context, $data);
 
         $this->viewFileSystem = $viewFileSystem;
+        $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
         $this->storyblokClient = $storyblokClient->create([
-            'apiKey' => $scopeConfig->getValue(
+            'apiKey' => $this->scopeConfig->getValue(
                 'storyblok/general/api_key',
                 ScopeInterface::SCOPE_STORE,
                 $this->_storeManager->getStore()->getId()
             )
         ]);
+    }
+    public function getSlug()
+    {
+        $slug = $this->getData('slug');
+        $topLevelFolder = $this->scopeConfig->getValue(
+            'storyblok/general/top_folder',
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        );
+
+        return $topLevelFolder . "/{$slug}";
     }
 
     public function getCacheLifetime()
